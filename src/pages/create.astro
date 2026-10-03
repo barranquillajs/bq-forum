@@ -1,0 +1,22 @@
+---
+import Container from "@components/Container/Container.astro";
+import PageLayout from "@layouts/PageLayout.astro";
+import { HOME } from "@constants/general";
+import { PostEditor } from "@components/PostEditor/PostEditor";
+---
+
+<PageLayout title={`Crear - ${HOME.TITLE}`} description={HOME.DESCRIPTION}>
+    <Container>
+        <main>
+            <section class="my-14">
+                <h1 class="text-4xl">Crea tu post aqui</h1>
+                <p>
+                    El formato de los post es mdx, el mismo formato con que github renderiza los textos. Puedes ver mas información aquí: https://mdxjs.com/docs
+                </p>
+            </section>
+            <section>
+                <PostEditor client:load />
+            </section>
+        </main>
+    </Container>
+</PageLayout>
