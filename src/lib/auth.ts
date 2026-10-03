@@ -1,4 +1,12 @@
-import { oauthState, oauthVerifier } from "@constants/storage";
+import { API_RESPONSES } from "@constants/responses";
+import { OAUTH_STATE, OAUTH_VERIFIER } from "@constants/storage";
+import { postAuthCookies } from "@controllers/postAuthCookies";
+
+import {
+  PUBLIC_GITHUB_URL,
+  PUBLIC_APP_URL,
+  PUBLIC_GITHUB_CLIENT_ID,
+} from "astro:env/client";
 
 export const initializeRandom = () => {
   const random = (length = 32) => {
@@ -13,8 +21,8 @@ export const initializeRandom = () => {
   const state = random();
   const codeVerifier = random(64);
 
-  sessionStorage.setItem(oauthState, state);
-  sessionStorage.setItem(oauthVerifier, codeVerifier);
+  sessionStorage.setItem(OAUTH_STATE, state);
+  sessionStorage.setItem(OAUTH_VERIFIER, codeVerifier);
 
   return { state, codeVerifier };
 };
@@ -34,37 +42,23 @@ export const initializeAuth = async (
   oauthState: string,
 ) => {
   const challenge = await generateChallenge(oauthVerifier);
-  const clientId = import.meta.env.PUBLIC_GITHUB_CLIENT_ID || "";
-  const appUrl = import.meta.env.APP_URL || "";
+  const redirectUri = `${PUBLIC_APP_URL}/api/authCallback`;
 
   const params = new URLSearchParams({
-    client_id: clientId,
-    redirect_uri: `${appUrl}`,
+    client_id: PUBLIC_GITHUB_CLIENT_ID,
+    redirect_uri: redirectUri,
     state: oauthState,
     code_challenge: challenge,
     code_challenge_method: "S256",
   });
 
-  window.location.href = `https://github.com/login/oauth/authorize?${params}`;
-};
+  const result = await postAuthCookies({
+    oauthState,
+    oauthVerifier,
+  });
 
-export const getGitHubOAuthParams = () => {
-  const params = new URLSearchParams(window.location.search);
+  if (!result.success)
+    return alert(API_RESPONSES.ERROR.ERROR_IN_AUTHENTICATION_FLOW);
 
-  return {
-    code: params.get("code"),
-    state: params.get("state"),
-    iss: params.get("iss"),
-  };
-};
-
-export const verifyAuthIfPresent = () => {
-  const { code, state, iss } = getGitHubOAuthParams();
-
-  if (!code || !state || !iss) return;
-
-  const previousState = sessionStorage.getItem(oauthState);
-  if (previousState !== state) return;
-
-  console.log({ code, state, iss, previousState });
+  window.location.href = `${PUBLIC_GITHUB_URL}/login/oauth/authorize?${params}`;
 };
