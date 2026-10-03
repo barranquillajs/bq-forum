@@ -1,5 +1,5 @@
+import { API_URLS } from "@constants/urls";
 import { globalController } from "@controllers/globalController";
-import { PUBLIC_APP_URL } from "astro:env/client";
 
 type postAuthCookiesData = {
   oauthState: string;
@@ -14,4 +14,4 @@ export interface postAuthCookiesResponse {
 export const postAuthCookies = async (
   data: postAuthCookiesData,
 ): Promise<postAuthCookiesResponse> =>
-  await globalController(`${PUBLIC_APP_URL}/api/authCookies`, "POST", data);
+  await globalController(API_URLS.POST_AUTH_COOKIES, "POST", data);

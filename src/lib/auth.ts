@@ -9,6 +9,7 @@ import { API_RESPONSES } from "@constants/responses";
 
 import { postAuthCookies } from "@controllers/postAuthCookies";
 import { removeLocalStorage, setLocalStorage } from "@lib/localStorage";
+import { API_URLS } from "@constants/urls";
 
 export const initializeRandom = () => {
   const random = (length = 32) => {
@@ -59,7 +60,7 @@ export const initializeAuth = async (
   if (!result.success)
     return alert(API_RESPONSES.ERROR.ERROR_IN_AUTHENTICATION_FLOW);
 
-  window.location.href = `${PUBLIC_GITHUB_URL}/login/oauth/authorize?${params}`;
+  window.location.href = `${API_URLS.GITHUB_OAUTH}?${params}`;
 };
 
 export const saveUserInfoIfAvaliable = async () => {

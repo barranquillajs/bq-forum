@@ -9,6 +9,7 @@ import { GITHUB_CLIENT_SECRET } from "astro:env/server";
 import { API_RESPONSES, HTTP_STATUS } from "@constants/responses";
 import type { APIRoute } from "astro";
 import { OAUTH_TOKEN } from "@constants/storage";
+import { API_URLS } from "@constants/urls";
 
 export const GET = (async ({ url, cookies }) => {
   const code = url.searchParams.get("code");
@@ -24,9 +25,7 @@ export const GET = (async ({ url, cookies }) => {
       },
     );
 
-  const fetchUrl = `${PUBLIC_GITHUB_URL}/login/oauth/access_token`;
-
-  const response = await fetch(fetchUrl, {
+  const response = await fetch(API_URLS.GITHUB_ACCESS_TOKEN, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -59,7 +58,7 @@ export const GET = (async ({ url, cookies }) => {
     maxAge: 600,
   });
 
-  const userResponse = await fetch(`${PUBLIC_GITHUB_API_URL}/user`, {
+  const userResponse = await fetch(API_URLS.GITHUB_USER_DATA, {
     headers: {
       Authorization: `Bearer ${data.access_token}`,
       Accept: "application/vnd.github+json",
