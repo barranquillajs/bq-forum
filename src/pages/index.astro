@@ -7,11 +7,10 @@ import { HOME } from "@constants/general";
 <PageLayout title={HOME.TITLE} description={HOME.DESCRIPTION}>
     <Container>
         <main>
-            <section class="my-10">
+            <section class="my-14">
                 <h1 class="text-4xl">Hola for</h1>
                 <p>
-                    Un logar donde puedes meter la informacion que quieras sobre
-                    la ciudad o el meetup
+                    Un lugar donde puedes crear conversaciones permanentes sobre la comunidad o la ciudad
                 </p>
             </section>
             <section>
@@ -40,3 +39,8 @@ import { HOME } from "@constants/general";
         </main>
     </Container>
 </PageLayout>
+
+<script>
+  import { saveUserInfoIfAvaliable } from "@lib/auth";
+  saveUserInfoIfAvaliable()
+</script>

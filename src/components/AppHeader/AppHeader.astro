@@ -9,12 +9,14 @@ import { AuthButton } from "@components/AuthButton/AuthButton.tsx";
         <div class="flex items-center justify-between">
             <a href="/">
                 <div class="flex items-center gap-2">
-                    <img src="/BAQJS.svg" alt="Voib logo" class="w-6 mb-1" />
-                    {SITE.NAME}
+                    <img src="/BAQJS.svg" alt="BarranquillaJs logo" class="w-10 rounded-full mb-1 bg-amber-300" />
+                    <span class="text-2xl font-bold">{SITE.NAME}</span>
                 </div>
             </a>
-            <button>Crear +</button>
-            <AuthButton client:only />
+            <div class="flex items-center gap-4">
+                <button class="btn btn-sm btn-info">Crear +</button>
+                <AuthButton client:only />
+            </div>
         </div>
     </Container>
 </header>

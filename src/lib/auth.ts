@@ -1,12 +1,14 @@
-import { API_RESPONSES } from "@constants/responses";
-import { OAUTH_STATE, OAUTH_VERIFIER } from "@constants/storage";
-import { postAuthCookies } from "@controllers/postAuthCookies";
-
 import {
   PUBLIC_GITHUB_URL,
   PUBLIC_APP_URL,
   PUBLIC_GITHUB_CLIENT_ID,
 } from "astro:env/client";
+
+import { OAUTH_TOKEN, USER_DATA } from "@constants/storage";
+import { API_RESPONSES } from "@constants/responses";
+
+import { postAuthCookies } from "@controllers/postAuthCookies";
+import { removeLocalStorage, setLocalStorage } from "@lib/localStorage";
 
 export const initializeRandom = () => {
   const random = (length = 32) => {
@@ -20,9 +22,6 @@ export const initializeRandom = () => {
 
   const state = random();
   const codeVerifier = random(64);
-
-  sessionStorage.setItem(OAUTH_STATE, state);
-  sessionStorage.setItem(OAUTH_VERIFIER, codeVerifier);
 
   return { state, codeVerifier };
 };
@@ -61,4 +60,30 @@ export const initializeAuth = async (
     return alert(API_RESPONSES.ERROR.ERROR_IN_AUTHENTICATION_FLOW);
 
   window.location.href = `${PUBLIC_GITHUB_URL}/login/oauth/authorize?${params}`;
+};
+
+export const saveUserInfoIfAvaliable = async () => {
+  const params = new URLSearchParams(window.location.search);
+
+  const name = params.get("name");
+  const avatarUrl = params.get("avatarUrl");
+  const token = params.get("token");
+
+  if (!name || !avatarUrl || !token) return null;
+
+  const user = {
+    name,
+    avatarUrl,
+  };
+
+  setLocalStorage(USER_DATA, user);
+  setLocalStorage(OAUTH_TOKEN, token);
+
+  window.history.replaceState({}, "", window.location.pathname);
+};
+
+export const logout = () => {
+  removeLocalStorage(USER_DATA);
+  removeLocalStorage(OAUTH_TOKEN);
+  window.location.href = PUBLIC_APP_URL;
 };

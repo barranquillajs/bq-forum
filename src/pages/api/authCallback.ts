@@ -8,6 +8,7 @@ import { GITHUB_CLIENT_SECRET } from "astro:env/server";
 
 import { API_RESPONSES, HTTP_STATUS } from "@constants/responses";
 import type { APIRoute } from "astro";
+import { OAUTH_TOKEN } from "@constants/storage";
 
 export const GET = (async ({ url, cookies }) => {
   const code = url.searchParams.get("code");
@@ -50,6 +51,14 @@ export const GET = (async ({ url, cookies }) => {
       { status: HTTP_STATUS.BAD_REQUEST },
     );
 
+  cookies.set(OAUTH_TOKEN, data.access_token, {
+    httpOnly: true,
+    secure: import.meta.env.PROD,
+    sameSite: "lax",
+    path: "/",
+    maxAge: 600,
+  });
+
   const userResponse = await fetch(`${PUBLIC_GITHUB_API_URL}/user`, {
     headers: {
       Authorization: `Bearer ${data.access_token}`,
@@ -65,6 +74,7 @@ export const GET = (async ({ url, cookies }) => {
 
   redirectUrl.searchParams.set("name", name);
   redirectUrl.searchParams.set("avatarUrl", avatarUrl);
+  redirectUrl.searchParams.set("token", data.access_token);
 
   return Response.redirect(redirectUrl, HTTP_STATUS.FOUND);
 }) satisfies APIRoute;
