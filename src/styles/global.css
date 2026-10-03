@@ -1,11 +1,12 @@
+@plugin "@tailwindcss/typography";
 @import "tailwindcss";
 @plugin "daisyui";
 
 html {
-    overflow-y: scroll;
-    color-scheme: light;
+  overflow-y: scroll;
+  color-scheme: light;
 }
 
 html.dark {
-    color-scheme: dark;
+  color-scheme: dark;
 }
