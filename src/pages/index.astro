@@ -7,13 +7,41 @@ import { HOME } from "@constants/general";
 <PageLayout title={HOME.TITLE} description={HOME.DESCRIPTION}>
     <Container>
         <main>
-            <div class="my-10">
+            <section class="my-10">
                 <h1 class="text-4xl">Hola for</h1>
                 <p>
                     Un logar donde puedes meter la informacion que quieras sobre
                     la ciudad o el meetup
                 </p>
-            </div>
+            </section>
+            <section>
+                <article>
+                    <h3>Titulo del articulo</h3>
+                    <div>
+                        <span>avatar circular</span>
+                        <span>Nombre del usuario</span>
+                    </div>
+                </article>
+                <article>
+                    <h3>Titulo del articulo</h3>
+                    <div>
+                        <span>avatar circular</span>
+                        <span>Nombre del usuario</span>
+                    </div>
+                </article>
+                <article>
+                    <h3>Titulo del articulo</h3>
+                    <div>
+                        <span>avatar circular</span>
+                        <span>Nombre del usuario</span>
+                    </div>
+                </article>
+            </section>
         </main>
     </Container>
 </PageLayout>
+
+<script>
+    import { verifyAuthIfPresent } from "@lib/auth";
+    verifyAuthIfPresent();
+</script>

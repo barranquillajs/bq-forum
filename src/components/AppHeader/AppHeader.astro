@@ -1,6 +1,7 @@
 ---
 import Container from "@components/Container/Container.astro";
 import { SITE } from "@constants/general";
+import { AuthButton } from "@components/AuthButton/AuthButton.tsx";
 ---
 
 <header class="fixed top-0 left-0 right-0 z-50 py-1 bg-stone-100/75 dark:bg-stone-900/25 backdrop-blur-sm saturate-200">
@@ -13,7 +14,7 @@ import { SITE } from "@constants/general";
                 </div>
             </a>
             <button>Crear +</button>
-            <button>Iniciar sesión</button>
+            <AuthButton client:only />
         </div>
     </Container>
 </header>
