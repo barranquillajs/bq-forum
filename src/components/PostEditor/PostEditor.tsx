@@ -1,3 +1,4 @@
+import { uploadPost } from "@controllers/uploadPost";
 import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 
@@ -11,9 +12,11 @@ export const PostEditor = () => {
   const handleSubmit = async (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    const response = await uploadPost({ title, content });
     console.log({
       title,
       content,
+      response,
     });
   };
 
@@ -74,7 +77,7 @@ export const PostEditor = () => {
         )}
       </div>
 
-      <button type="submit" className="btn btn-success">
+      <button type="submit" className="btn btn-info">
         Publicar
       </button>
     </form>

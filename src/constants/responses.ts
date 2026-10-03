@@ -1,11 +1,19 @@
 export const API_RESPONSES = {
   SUCCESS: {
     COOKIES_CREATED: "Cookies created successfully",
+    POST_CREATED: "Post created successfully",
     USER_AUTHENTICATED: "User authenticated successfully",
   },
   ERROR: {
+    USER_NOT_AUTHENTICATED: "User not authenticated",
+    MISSING_REQUIRED_PARAMETERS: "Missing required parameters",
+    ERROR_CREATING_PULL_REQUEST: "Error creating pull request",
+    ERROR_MERGING_PULL_REQUEST: "Error merging pull request",
+    ERROR_CREATING_POST: "Error creating post",
+    ERROR_CREATING_BRANCH: "Error creating branch",
     ERROR_SETTING_COOKIES: "Error setting cookies",
     ERROR_IN_AUTHENTICATION_FLOW: "Error in authentication flow",
+    UNEXPECTED_ERROR_CREATING_POST: "Unexpected error creating post",
     MISSING_OAUTH_PARAMETERS: "Missing OAuth parameters",
     DATA_ERROR: "Data error",
   },
