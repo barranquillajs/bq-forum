@@ -15,6 +15,15 @@
     "typescript": "^7"
   },
   "dependencies": {
-    "astro": "^7.3.5"
+    "@astrojs/react": "^7.0.0",
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "astro": "^7.3.5",
+    "daisyui": "^5.7.47",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "tailwind-merge": "^3.7.0",
+    "tailwindcss": "^4.3.3"
   }
 }
