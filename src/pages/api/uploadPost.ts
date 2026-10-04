@@ -5,6 +5,7 @@ import type { APIRoute } from "astro";
 
 const REPOSITORY = "barranquillajs/bq-forum";
 const BASE_BRANCH = "main";
+const POST_LABEL = "post";
 
 export const POST = (async ({ request, cookies }) => {
   try {
@@ -132,6 +133,7 @@ ${content}
           body: `Automatically generated post: **${title}**`,
           head: branchName,
           base: BASE_BRANCH,
+          labels: [POST_LABEL],
         }),
       },
     );
@@ -152,6 +154,32 @@ ${content}
     }
 
     const pullRequest = await pullRequestResponse.json();
+
+    const labelResponse = await fetch(
+      `${API_URLS.GITHUB_BRANCH}/${REPOSITORY}/issues/${pullRequest.number}/labels`,
+      {
+        method: "POST",
+        headers: githubHeaders,
+        body: JSON.stringify({
+          labels: [POST_LABEL],
+        }),
+      },
+    );
+
+    if (!labelResponse.ok) {
+      const error = await labelResponse.text();
+
+      return new Response(
+        JSON.stringify({
+          success: false,
+          message: API_RESPONSES.ERROR.ERROR_ADDING_LABEL,
+          error,
+        }),
+        {
+          status: HTTP_STATUS.BAD_REQUEST,
+        },
+      );
+    }
 
     const mergeResponse = await fetch(
       `${API_URLS.GITHUB_BRANCH}/${REPOSITORY}/pulls/${pullRequest.number}/merge`,

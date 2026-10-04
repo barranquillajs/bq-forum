@@ -13,6 +13,7 @@ export const API_RESPONSES = {
     ERROR_CREATING_BRANCH: "Error creating branch",
     ERROR_SETTING_COOKIES: "Error setting cookies",
     ERROR_IN_AUTHENTICATION_FLOW: "Error in authentication flow",
+    ERROR_ADDING_LABEL: "Error adding label",
     UNEXPECTED_ERROR_CREATING_POST: "Unexpected error creating post",
     MISSING_OAUTH_PARAMETERS: "Missing OAuth parameters",
     DATA_ERROR: "Data error",

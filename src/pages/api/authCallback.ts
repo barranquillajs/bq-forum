@@ -1,15 +1,11 @@
-import {
-  PUBLIC_GITHUB_URL,
-  PUBLIC_GITHUB_CLIENT_ID,
-  PUBLIC_GITHUB_API_URL,
-  PUBLIC_APP_URL,
-} from "astro:env/client";
+import { PUBLIC_GITHUB_CLIENT_ID, PUBLIC_APP_URL } from "astro:env/client";
 import { GITHUB_CLIENT_SECRET } from "astro:env/server";
 
 import { API_RESPONSES, HTTP_STATUS } from "@constants/responses";
 import type { APIRoute } from "astro";
 import { OAUTH_TOKEN } from "@constants/storage";
 import { API_URLS } from "@constants/urls";
+import { COOKIES_MAX_AGE } from "@constants/general";
 
 export const GET = (async ({ url, cookies }) => {
   const code = url.searchParams.get("code");
@@ -55,7 +51,7 @@ export const GET = (async ({ url, cookies }) => {
     secure: import.meta.env.PROD,
     sameSite: "lax",
     path: "/",
-    maxAge: 600,
+    maxAge: COOKIES_MAX_AGE,
   });
 
   const userResponse = await fetch(API_URLS.GITHUB_USER_DATA, {

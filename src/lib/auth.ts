@@ -50,6 +50,7 @@ export const initializeAuth = async (
     state: oauthState,
     code_challenge: challenge,
     code_challenge_method: "S256",
+    scope: "repo",
   });
 
   const result = await postAuthCookies({

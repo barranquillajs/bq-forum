@@ -12,3 +12,5 @@ export const HOME = {
   DESCRIPTION:
     "Un foro para compartir opinión de programación y la vida. Sientete como en casa.",
 };
+
+export const COOKIES_MAX_AGE = 60 * 60 * 24 * 30;

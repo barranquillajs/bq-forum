@@ -1,6 +1,7 @@
 import type { APIRoute } from "astro";
 import { OAUTH_STATE, OAUTH_VERIFIER } from "@constants/storage";
 import { API_RESPONSES, HTTP_STATUS } from "@constants/responses";
+import { COOKIES_MAX_AGE } from "@constants/general";
 
 export const POST = (async ({ cookies, request }) => {
   const { oauthVerifier, oauthState } = await request.json();
@@ -11,7 +12,7 @@ export const POST = (async ({ cookies, request }) => {
       secure: import.meta.env.PROD,
       sameSite: "lax",
       path: "/",
-      maxAge: 600,
+      maxAge: COOKIES_MAX_AGE,
     });
 
     cookies.set(OAUTH_STATE, oauthState, {
@@ -19,7 +20,7 @@ export const POST = (async ({ cookies, request }) => {
       secure: import.meta.env.PROD,
       sameSite: "lax",
       path: "/",
-      maxAge: 600,
+      maxAge: COOKIES_MAX_AGE,
     });
   } catch (error) {
     console.error(error);
