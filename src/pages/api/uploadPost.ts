@@ -111,6 +111,7 @@ title: "${title.replace(/"/g, '\\"')}"
 date: "${new Date().toISOString()}"
 name: "${userData.name}"
 avatarUrl: "${userData.avatarUrl}"
+published: true
 ---
 
 ${content}
