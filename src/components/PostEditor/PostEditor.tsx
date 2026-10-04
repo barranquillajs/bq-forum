@@ -1,6 +1,7 @@
-import { uploadPost } from "@controllers/uploadPost";
 import { useState } from "react";
-import ReactMarkdown from "react-markdown";
+
+import { MarkdowWrapper } from "@components/MarkdowWrapper/MarkdowWrapper";
+import { uploadPost } from "@controllers/uploadPost";
 
 type Mode = "write" | "preview";
 
@@ -68,7 +69,7 @@ export const PostEditor = () => {
           <div className="rounded-lg border p-6">
             {content ? (
               <div className="prose">
-                <ReactMarkdown>{content}</ReactMarkdown>
+                <MarkdowWrapper textBody={content} />
               </div>
             ) : (
               <p className="text-gray-400">No hay contenido para mostrar.</p>

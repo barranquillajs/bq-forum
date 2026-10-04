@@ -1,0 +1,29 @@
+---
+import Container from "@components/Container/Container.astro";
+import { MarkdowWrapper } from "@components/MarkdowWrapper/MarkdowWrapper";
+import { HOME } from "@constants/general";
+import { APP_URLS } from "@constants/urls";
+import PageLayout  from "@layouts/PageLayout.astro";
+import type { ContentPost } from "@lib/types";
+import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
+
+const posts = await getCollection("posts") as Array<ContentPost>;
+
+export const getStaticPaths = (() => {
+    const idParams = posts.map((post) => ({ params: { post: post.id } }))
+	return idParams;
+}) satisfies GetStaticPaths;
+
+const { post } = Astro.params;
+const postData = posts.find((p) => p.id === post);
+if (!postData) return Astro.redirect(APP_URLS.INDEX);
+---
+<PageLayout title={`${postData.data.title} | ${HOME.TITLE}`} description={HOME.DESCRIPTION}>
+    <Container>
+        <section class="my-14">
+            <h1>{postData.data.title}</h1>
+            <MarkdowWrapper client:load textBody={postData.body} />
+        </section>
+    </Container>
+</PageLayout>
