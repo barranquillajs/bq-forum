@@ -67,10 +67,13 @@ export const GET = (async ({ url, cookies }) => {
   const avatarUrl = user.avatar_url;
   const redirectUrl = new URL(PUBLIC_APP_URL);
 
-  cookies.set(USER_DATA, {
-    name,
-    avatarUrl,
-  });
+  cookies.set(
+    USER_DATA,
+    JSON.stringify({
+      name,
+      avatarUrl,
+    }),
+  );
 
   redirectUrl.searchParams.set("name", name);
   redirectUrl.searchParams.set("avatarUrl", avatarUrl);

@@ -27,7 +27,9 @@ export const POST = (async ({ request, cookies }) => {
       );
     }
 
-    const { name, avatarUrl }: User = cookies.get(USER_DATA) as any;
+    const { name, avatarUrl }: User = JSON.parse(
+      cookies.get(USER_DATA)?.value ?? "{}",
+    );
 
     if (!name || !avatarUrl) {
       return new Response(
