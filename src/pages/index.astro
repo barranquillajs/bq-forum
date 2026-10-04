@@ -1,7 +1,14 @@
 ---
+import { getCollection } from "astro:content";
+
 import Container from "@components/Container/Container.astro";
 import PageLayout from "@layouts/PageLayout.astro";
+import type { ContentPost } from "@lib/types";
+import { APP_URLS } from "@constants/urls";
 import { HOME } from "@constants/general";
+
+
+const posts = await getCollection("posts") as Array<ContentPost>;
 ---
 
 <PageLayout title={HOME.TITLE} description={HOME.DESCRIPTION}>
@@ -13,28 +20,16 @@ import { HOME } from "@constants/general";
                     Un lugar donde puedes crear conversaciones permanentes sobre la comunidad o la ciudad
                 </p>
             </section>
-            <section>
-                <article>
-                    <h3>Titulo del articulo</h3>
-                    <div>
-                        <span>avatar circular</span>
-                        <span>Nombre del usuario</span>
-                    </div>
-                </article>
-                <article>
-                    <h3>Titulo del articulo</h3>
-                    <div>
-                        <span>avatar circular</span>
-                        <span>Nombre del usuario</span>
-                    </div>
-                </article>
-                <article>
-                    <h3>Titulo del articulo</h3>
-                    <div>
-                        <span>avatar circular</span>
-                        <span>Nombre del usuario</span>
-                    </div>
-                </article>
+            <section class="flex flex-col gap-4">
+                {posts.map((post) => (
+                    <a class="bg-base-100 rounded-lg cursor-pointer" href={`${APP_URLS.POST}/${post.id}`}>
+                        <h3>{post.data.title}</h3>
+                        <div>
+                            <span>avatar circular</span>
+                            <span>Nombre del usuario</span>
+                        </div>
+                    </a>
+                ))}
             </section>
         </main>
     </Container>

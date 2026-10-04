@@ -17,4 +17,5 @@ export const API_URLS = {
 export const APP_URLS = {
   INDEX: `${PUBLIC_APP_URL}/`,
   CREATE: `${PUBLIC_APP_URL}/create`,
+  POST: `${PUBLIC_APP_URL}/post`,
 };

@@ -2,11 +2,12 @@ import { defineConfig, envField } from "astro/config";
 import react from "@astrojs/react";
 import tailwindcss from "@tailwindcss/vite";
 import netlify from "@astrojs/netlify";
+import mdx from "@astrojs/mdx";
 
 export default defineConfig({
   site: "https://foro.barranquillajs.org",
   output: "server",
-  integrations: [react()],
+  integrations: [react(), mdx()],
 
   vite: {
     plugins: [tailwindcss()],
