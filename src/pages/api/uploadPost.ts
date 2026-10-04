@@ -1,6 +1,7 @@
 import { HTTP_STATUS, API_RESPONSES } from "@constants/responses";
-import { OAUTH_TOKEN } from "@constants/storage";
+import { OAUTH_TOKEN, USER_DATA } from "@constants/storage";
 import { API_URLS } from "@constants/urls";
+import type { User } from "@lib/types";
 import type { APIRoute } from "astro";
 
 const REPOSITORY = "barranquillajs/bq-forum";
@@ -12,6 +13,23 @@ export const POST = (async ({ request, cookies }) => {
     const githubToken = cookies.get(OAUTH_TOKEN)?.value;
 
     if (!githubToken) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          message: API_RESPONSES.ERROR.USER_NOT_AUTHENTICATED,
+        }),
+        {
+          status: HTTP_STATUS.UNAUTHORIZED,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+      );
+    }
+
+    const userData: User | undefined = cookies.get(USER_DATA) as any;
+
+    if (!userData) {
       return new Response(
         JSON.stringify({
           success: false,
@@ -90,6 +108,9 @@ export const POST = (async ({ request, cookies }) => {
 
     const mdxContent = `---
 title: "${title.replace(/"/g, '\\"')}"
+date: "${new Date().toISOString()}"
+name: "${userData.name}"
+avatarUrl: "${userData.avatarUrl}"
 ---
 
 ${content}

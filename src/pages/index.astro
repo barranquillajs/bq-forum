@@ -22,7 +22,7 @@ const posts = await getCollection("posts") as Array<ContentPost>;
             </section>
             <section class="flex flex-col gap-4">
                 {posts.map((post) => (
-                    <a class="bg-base-100 rounded-lg cursor-pointer" href={`${APP_URLS.POST}/${post.id}`}>
+                    <a class="bg-base-100 rounded-lg cursor-pointer shadow-sm" href={`${APP_URLS.POST}/${post.id}`}>
                         <h3>{post.data.title}</h3>
                         <div>
                             <span>avatar circular</span>

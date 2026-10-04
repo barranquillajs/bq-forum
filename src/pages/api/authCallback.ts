@@ -3,7 +3,7 @@ import { GITHUB_CLIENT_SECRET } from "astro:env/server";
 
 import { API_RESPONSES, HTTP_STATUS } from "@constants/responses";
 import type { APIRoute } from "astro";
-import { OAUTH_TOKEN } from "@constants/storage";
+import { OAUTH_TOKEN, USER_DATA } from "@constants/storage";
 import { API_URLS } from "@constants/urls";
 import { COOKIES_MAX_AGE } from "@constants/general";
 
@@ -66,6 +66,11 @@ export const GET = (async ({ url, cookies }) => {
   const name = user.name;
   const avatarUrl = user.avatar_url;
   const redirectUrl = new URL(PUBLIC_APP_URL);
+
+  cookies.set(USER_DATA, {
+    name,
+    avatarUrl,
+  });
 
   redirectUrl.searchParams.set("name", name);
   redirectUrl.searchParams.set("avatarUrl", avatarUrl);

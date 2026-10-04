@@ -7,6 +7,9 @@ export type ContentPost = {
   id: string;
   data: {
     title: string;
+    date: string;
+    name: string;
+    avatarUrl: string;
   };
   body: string;
   filePath: string;
