@@ -27,9 +27,9 @@ export const POST = (async ({ request, cookies }) => {
       );
     }
 
-    const userData: User | undefined = cookies.get(USER_DATA) as any;
+    const { name, avatarUrl }: User = cookies.get(USER_DATA) as any;
 
-    if (!userData) {
+    if (!name || !avatarUrl) {
       return new Response(
         JSON.stringify({
           success: false,
@@ -109,8 +109,8 @@ export const POST = (async ({ request, cookies }) => {
     const mdxContent = `---
 title: "${title.replace(/"/g, '\\"')}"
 date: "${new Date().toISOString()}"
-name: "${userData.name}"
-avatarUrl: "${userData.avatarUrl}"
+name: "${name}"
+avatarUrl: "${avatarUrl}"
 published: true
 ---
 
