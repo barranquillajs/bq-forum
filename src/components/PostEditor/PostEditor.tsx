@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import { MarkdowWrapper } from "@components/MarkdowWrapper/MarkdowWrapper";
 import { uploadPost } from "@controllers/uploadPost";
+import { APP_URLS } from "@constants/urls";
 
 type Mode = "write" | "preview";
 
@@ -9,16 +10,25 @@ export const PostEditor = () => {
   const [mode, setMode] = useState<Mode>("write");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (event: React.SubmitEvent<HTMLFormElement>) => {
+    const errorMessage = "Error al publicar";
     event.preventDefault();
 
-    const response = await uploadPost({ title, content });
-    console.log({
-      title,
-      content,
-      response,
-    });
+    setIsSubmitting(true);
+
+    try {
+      const { data } = await uploadPost({ title, content });
+
+      if (data.slug) return (window.location.href = APP_URLS.INDEX);
+      else alert(errorMessage);
+      setIsSubmitting(false);
+    } catch (error) {
+      console.error(`${errorMessage}:`, error);
+      alert(errorMessage);
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -36,6 +46,7 @@ export const PostEditor = () => {
           placeholder="Título de la publicación"
           className="input w-full"
           required
+          disabled={isSubmitting}
         />
       </div>
 
@@ -64,6 +75,7 @@ export const PostEditor = () => {
             placeholder="Escribe tu publicación en Markdown..."
             className="textarea input w-full h-125"
             required
+            disabled={isSubmitting}
           />
         ) : (
           <div className="rounded-lg border p-6">
@@ -78,8 +90,15 @@ export const PostEditor = () => {
         )}
       </div>
 
-      <button type="submit" className="btn btn-info">
-        Publicar
+      <button type="submit" className="btn btn-info" disabled={isSubmitting}>
+        {isSubmitting ? (
+          <>
+            <span className="loading loading-spinner loading-sm" />
+            Publicando...
+          </>
+        ) : (
+          "Publicar"
+        )}
       </button>
     </form>
   );

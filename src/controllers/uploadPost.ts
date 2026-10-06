@@ -9,6 +9,10 @@ type uploadPostData = {
 export interface uploadPostResponse {
   success: boolean;
   message: string;
+  data: {
+    title: string;
+    slug: string;
+  };
 }
 
 export const uploadPost = async (

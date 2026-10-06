@@ -239,8 +239,6 @@ ${content}
         data: {
           title,
           slug,
-          pullRequest: pullRequest.html_url,
-          commit: mergeResult.sha,
         },
       }),
       {
