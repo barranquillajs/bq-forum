@@ -9,6 +9,10 @@ import { HOME } from "@constants/general";
 
 
 const posts = await getCollection("posts") as Array<ContentPost>;
+const sortedPosts = posts.sort(
+  (a, b) =>
+    new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
 ---
 
 <PageLayout title={HOME.TITLE} description={HOME.DESCRIPTION}>
@@ -21,12 +25,16 @@ const posts = await getCollection("posts") as Array<ContentPost>;
                 </p>
             </section>
             <section class="flex flex-col gap-4">
-                {posts.map((post) => (
-                    <a class="bg-base-100 rounded-lg cursor-pointer shadow-sm" href={`${APP_URLS.POST}/${post.id}`}>
-                        <h3>{post.data.title}</h3>
-                        <div>
-                            <span>avatar circular</span>
-                            <span>Nombre del usuario</span>
+                {sortedPosts.map((post) => (
+                    <a class="bg-base-100 rounded-lg cursor-pointer shadow-sm p-4" href={`${APP_URLS.POST}/${post.id}`}>
+                        <h3 class="text-2xl font-bold mb-2">{post.data.title}</h3>
+                        <div class="flex flex-row gap-2 items-center">
+                            <div class="avatar">
+                              <div class="w-10 rounded-full">
+                                <img alt={`Usuario: ${post.data.name}`} src={post.data.avatarUrl} />
+                              </div>
+                            </div>
+                            <span>{post.data.name}</span>
                         </div>
                     </a>
                 ))}
