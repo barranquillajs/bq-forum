@@ -13,6 +13,8 @@ export const HOME = {
     "Un foro para compartir opinión de programación y la vida. Sientete como en casa.",
 };
 
+export const POSTS_PER_PAGE = 6;
+
 export const COOKIES_MAX_AGE = 60 * 60 * 24 * 30;
 
 export const COOKIES_STANDARD_OPTIONS = {

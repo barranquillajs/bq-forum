@@ -2,43 +2,89 @@
 import { getCollection } from "astro:content";
 
 import Container from "@components/Container/Container.astro";
+import { HOME, POSTS_PER_PAGE } from "@constants/general";
 import PageLayout from "@layouts/PageLayout.astro";
 import type { ContentPost } from "@lib/types";
 import { APP_URLS } from "@constants/urls";
-import { HOME } from "@constants/general";
-
 
 const posts = await getCollection("posts") as Array<ContentPost>;
+
 const sortedPosts = posts.sort(
   (a, b) =>
     new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
 );
+
+const pageParam = Number(Astro.url.searchParams.get("page") ?? "1");
+
+const currentPage = Math.max(
+  1,
+  Number.isFinite(pageParam) ? pageParam : 1
+);
+
+const totalPages = Math.ceil(sortedPosts.length / POSTS_PER_PAGE);
+const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
+const endIndex = startIndex + POSTS_PER_PAGE;
+const paginatedPosts = sortedPosts.slice(startIndex, endIndex);
 ---
 
 <PageLayout title={HOME.TITLE} description={HOME.DESCRIPTION}>
-    <Container>
-        <main>
-            <section class="my-14">
-                <h1 class="text-4xl">Hola for</h1>
-                <p>
-                    Un lugar donde puedes crear conversaciones permanentes sobre la comunidad o la ciudad
-                </p>
-            </section>
-            <section class="flex flex-col gap-4">
-                {sortedPosts.map((post) => (
-                    <a class="bg-base-100 rounded-lg cursor-pointer shadow-sm p-4" href={`${APP_URLS.POST}/${post.id}`}>
-                        <h3 class="text-2xl font-bold mb-2">{post.data.title}</h3>
-                        <div class="flex flex-row gap-2 items-center">
-                            <div class="avatar">
-                              <div class="w-10 rounded-full">
-                                <img alt={`Usuario: ${post.data.name}`} src={post.data.avatarUrl} />
-                              </div>
-                            </div>
-                            <span>{post.data.name}</span>
-                        </div>
-                    </a>
-                ))}
-            </section>
-        </main>
-    </Container>
+  <Container>
+    <main>
+      <section class="my-14">
+        <h1 class="text-4xl">Hola for</h1>
+
+        <p>
+          Un lugar donde puedes crear conversaciones permanentes sobre la
+          comunidad o la ciudad
+        </p>
+      </section>
+
+      <section class="flex flex-col gap-4">
+        {paginatedPosts.map((post) => (
+          <a
+            class="bg-base-100 rounded-lg cursor-pointer shadow-sm p-4"
+            href={`${APP_URLS.POST}/${post.id}`}
+          >
+            <h3 class="text-2xl font-bold mb-2">
+              {post.data.title}
+            </h3>
+
+            <div class="flex flex-row gap-2 items-center">
+              <div class="avatar">
+                <div class="w-8 rounded-full">
+                  <img
+                    alt={`Usuario: ${post.data.name}`}
+                    src={post.data.avatarUrl}
+                  />
+                </div>
+              </div>
+
+              <span>{post.data.name}</span>
+            </div>
+          </a>
+        ))}
+      </section>
+
+      {totalPages > 1 && (
+        <nav class="flex justify-center gap-2 my-8">
+          {Array.from({ length: totalPages }, (_, index) => {
+            const page = index + 1;
+
+            return (
+              <a
+                href={`?page=${page}`}
+                class={`btn ${
+                  page === currentPage
+                    ? "btn-neutral"
+                    : "btn-outline"
+                }`}
+              >
+                {page}
+              </a>
+            );
+          })}
+        </nav>
+      )}
+    </main>
+  </Container>
 </PageLayout>
