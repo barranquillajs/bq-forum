@@ -1,27 +1,14 @@
 import type { APIRoute } from "astro";
 import { OAUTH_STATE, OAUTH_VERIFIER } from "@constants/storage";
 import { API_RESPONSES, HTTP_STATUS } from "@constants/responses";
-import { COOKIES_MAX_AGE } from "@constants/general";
+import { COOKIES_STANDARD_OPTIONS } from "@constants/general";
 
 export const POST = (async ({ cookies, request }) => {
   const { oauthVerifier, oauthState } = await request.json();
 
   try {
-    cookies.set(OAUTH_VERIFIER, oauthVerifier, {
-      httpOnly: true,
-      secure: import.meta.env.PROD,
-      sameSite: "lax",
-      path: "/",
-      maxAge: COOKIES_MAX_AGE,
-    });
-
-    cookies.set(OAUTH_STATE, oauthState, {
-      httpOnly: true,
-      secure: import.meta.env.PROD,
-      sameSite: "lax",
-      path: "/",
-      maxAge: COOKIES_MAX_AGE,
-    });
+    cookies.set(OAUTH_VERIFIER, oauthVerifier, COOKIES_STANDARD_OPTIONS);
+    cookies.set(OAUTH_STATE, oauthState, COOKIES_STANDARD_OPTIONS);
   } catch (error) {
     console.error(error);
     return new Response(

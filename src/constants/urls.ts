@@ -5,6 +5,7 @@ import {
 } from "astro:env/client";
 
 export const API_URLS = {
+  DELETE_COOKIES: `${PUBLIC_APP_URL}/api/deleteCookies`,
   POST_AUTH_CALLBACK: `${PUBLIC_APP_URL}/api/authCallback`,
   POST_AUTH_COOKIES: `${PUBLIC_APP_URL}/api/authCookies`,
   POST_UPLOAD_POST: `${PUBLIC_APP_URL}/api/uploadPost`,

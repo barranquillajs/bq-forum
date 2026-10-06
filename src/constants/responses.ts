@@ -3,6 +3,7 @@ export const API_RESPONSES = {
     COOKIES_CREATED: "Cookies created successfully",
     POST_CREATED: "Post created successfully",
     USER_AUTHENTICATED: "User authenticated successfully",
+    COOKIES_DELETED: "Cookies deleted successfully",
   },
   ERROR: {
     USER_NOT_AUTHENTICATED: "User not authenticated",
@@ -16,6 +17,7 @@ export const API_RESPONSES = {
     ERROR_ADDING_LABEL: "Error adding label",
     UNEXPECTED_ERROR_CREATING_POST: "Unexpected error creating post",
     MISSING_OAUTH_PARAMETERS: "Missing OAuth parameters",
+    ERROR_DELETING_COOKIES: "Error deleting cookies",
     DATA_ERROR: "Data error",
   },
 } as const;

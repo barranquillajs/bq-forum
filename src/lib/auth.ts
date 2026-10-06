@@ -1,14 +1,9 @@
-import {
-  PUBLIC_GITHUB_URL,
-  PUBLIC_APP_URL,
-  PUBLIC_GITHUB_CLIENT_ID,
-} from "astro:env/client";
-
-import { OAUTH_TOKEN, USER_DATA } from "@constants/storage";
-import { API_RESPONSES } from "@constants/responses";
-
-import { postAuthCookies } from "@controllers/postAuthCookies";
+import { PUBLIC_APP_URL, PUBLIC_GITHUB_CLIENT_ID } from "astro:env/client";
 import { removeLocalStorage, setLocalStorage } from "@lib/localStorage";
+import { postAuthCookies } from "@controllers/postAuthCookies";
+import { OAUTH_TOKEN, USER_DATA } from "@constants/storage";
+import { deleteCookies } from "@controllers/deleteCookies";
+import { API_RESPONSES } from "@constants/responses";
 import { API_URLS } from "@constants/urls";
 
 export const initializeRandom = () => {
@@ -84,8 +79,15 @@ export const saveUserInfoIfAvaliable = async () => {
   window.history.replaceState({}, "", window.location.pathname);
 };
 
-export const logout = () => {
+export const login = () => {
+  const { state, codeVerifier } = initializeRandom();
+  initializeAuth(codeVerifier, state);
+};
+
+export const logout = async () => {
   removeLocalStorage(USER_DATA);
   removeLocalStorage(OAUTH_TOKEN);
-  window.location.href = PUBLIC_APP_URL;
+
+  await deleteCookies();
+  window.location.reload();
 };

@@ -5,7 +5,7 @@ import { API_RESPONSES, HTTP_STATUS } from "@constants/responses";
 import type { APIRoute } from "astro";
 import { OAUTH_TOKEN, USER_DATA } from "@constants/storage";
 import { API_URLS } from "@constants/urls";
-import { COOKIES_MAX_AGE } from "@constants/general";
+import { COOKIES_STANDARD_OPTIONS } from "@constants/general";
 
 export const GET = (async ({ url, cookies }) => {
   const code = url.searchParams.get("code");
@@ -46,13 +46,7 @@ export const GET = (async ({ url, cookies }) => {
       { status: HTTP_STATUS.BAD_REQUEST },
     );
 
-  cookies.set(OAUTH_TOKEN, data.access_token, {
-    httpOnly: true,
-    secure: import.meta.env.PROD,
-    sameSite: "lax",
-    path: "/",
-    maxAge: COOKIES_MAX_AGE,
-  });
+  cookies.set(OAUTH_TOKEN, data.access_token, COOKIES_STANDARD_OPTIONS);
 
   const userResponse = await fetch(API_URLS.GITHUB_USER_DATA, {
     headers: {
@@ -73,6 +67,7 @@ export const GET = (async ({ url, cookies }) => {
       name,
       avatarUrl,
     }),
+    COOKIES_STANDARD_OPTIONS,
   );
 
   redirectUrl.searchParams.set("name", name);

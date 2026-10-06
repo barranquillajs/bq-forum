@@ -14,3 +14,11 @@ export const HOME = {
 };
 
 export const COOKIES_MAX_AGE = 60 * 60 * 24 * 30;
+
+export const COOKIES_STANDARD_OPTIONS = {
+  httpOnly: true,
+  secure: import.meta.env.PROD,
+  sameSite: "lax" as any,
+  path: "/",
+  maxAge: COOKIES_MAX_AGE,
+};

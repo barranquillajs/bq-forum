@@ -1,5 +1,5 @@
 import { useLocalStorage } from "@hooks/useLocalStorage/useLocalStorage";
-import { initializeAuth, initializeRandom, logout } from "@lib/auth";
+import { login, logout } from "@lib/auth";
 import { USER_DATA } from "@constants/storage";
 import { AUTH_BUTTON_ID, AUTH_BUTTON_ANCHOR } from "@constants/uiIds";
 import type { User } from "@lib/types";
@@ -7,14 +7,9 @@ import type { User } from "@lib/types";
 export const AuthButton = () => {
   const userData: User | undefined | null = useLocalStorage(USER_DATA);
 
-  const handleClick = () => {
-    const { state, codeVerifier } = initializeRandom();
-    initializeAuth(codeVerifier, state);
-  };
-
   if (!userData)
     return (
-      <button className="btn btn-warning btn-sm" onClick={handleClick}>
+      <button className="btn btn-warning btn-sm" onClick={() => login()}>
         Iniciar sesión
       </button>
     );

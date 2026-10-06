@@ -3,6 +3,10 @@ import Container from "@components/Container/Container.astro";
 import PageLayout from "@layouts/PageLayout.astro";
 import { HOME } from "@constants/general";
 import { PostEditor } from "@components/PostEditor/PostEditor";
+import { OAUTH_TOKEN, USER_DATA, OAUTH_STATE } from "@constants/storage";
+
+const loginButtonId = "login-button";
+const isUserLoggedIn = Astro.cookies.get(OAUTH_TOKEN)?.value !== undefined;
 ---
 
 <PageLayout title={`Crear - ${HOME.TITLE}`} description={HOME.DESCRIPTION}>
@@ -14,9 +18,23 @@ import { PostEditor } from "@components/PostEditor/PostEditor";
                     El formato de los post es mdx, el mismo formato con que github renderiza los textos. Puedes ver mas información aquí: https://mdxjs.com/docs
                 </p>
             </section>
-            <section>
+            {isUserLoggedIn ? <section>
                 <PostEditor client:load />
-            </section>
+            </section> : <section class="flex flex-col items-center text-3xl">
+                <h2>Inicia sesión antes de continuar</h2>
+                <button class="btn btn-warning btn-sm" id={loginButtonId}>
+                  Iniciar sesión
+                </button>
+            </section>}
+
         </main>
     </Container>
 </PageLayout>
+
+<script>
+import { login } from "@lib/auth";
+
+  const loginButtonId = "login-button";
+  const loginButtonElement = document.getElementById(loginButtonId)
+  if (loginButtonElement) loginButtonElement.addEventListener("click", () => login());
+</script>
