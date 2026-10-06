@@ -26,11 +26,17 @@ export const POST = (async ({ request, cookies }) => {
       );
     }
 
-    const { name, avatarUrl, id }: User = JSON.parse(
+    const currentUserData: User = JSON.parse(
       cookies.get(USER_DATA)?.value ?? "{}",
     );
 
-    if (!name || !avatarUrl) {
+    console.log(currentUserData);
+
+    if (
+      !currentUserData?.name ||
+      !currentUserData?.avatarUrl ||
+      !currentUserData?.id
+    ) {
       return new Response(
         JSON.stringify({
           success: false,
@@ -110,9 +116,9 @@ export const POST = (async ({ request, cookies }) => {
     const mdxContent = `---
 title: "${title.replace(/"/g, '\\"')}"
 date: "${new Date().toISOString()}"
-userId: "${id}"
-name: "${name}"
-avatarUrl: "${avatarUrl}"
+userId: "${currentUserData.id}"
+name: "${currentUserData.name}"
+avatarUrl: "${currentUserData.avatarUrl}"
 published: true
 ---
 
