@@ -1,7 +1,7 @@
 interface PublishButtonProps {
   isPublished: boolean;
   slug: string;
-  currentUserId: string;
+  currentUserId: number;
   postUserId: string;
 }
 
@@ -11,10 +11,16 @@ export const PublishButton = ({
   currentUserId,
   postUserId,
 }: PublishButtonProps) => {
-  console.log({ isPublished, slug, currentUserId, postUserId });
+  const isUserPost = parseInt(postUserId) === currentUserId;
+  console.log({ isPublished, slug, currentUserId, postUserId, isUserPost });
 
-  return (
-    <button className="btn btn-sm btn-error btn-outline">Despublicar</button>
-  );
-  // return <button>Publicar</button>;
+  if (isUserPost && isPublished)
+    return (
+      <button className="btn btn-sm btn-error btn-outline">Despublicar</button>
+    );
+  if (isUserPost && !isPublished)
+    return (
+      <button className="btn btn-sm btn-error btn-outline">Publicar</button>
+    );
+  return <div />;
 };
