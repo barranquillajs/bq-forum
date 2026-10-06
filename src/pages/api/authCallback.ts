@@ -57,6 +57,7 @@ export const GET = (async ({ url, cookies }) => {
   });
 
   const user = await userResponse.json();
+  const id = user.id;
   const name = user.name;
   const avatarUrl = user.avatar_url;
   const redirectUrl = new URL(PUBLIC_APP_URL);
@@ -64,6 +65,7 @@ export const GET = (async ({ url, cookies }) => {
   cookies.set(
     USER_DATA,
     JSON.stringify({
+      id,
       name,
       avatarUrl,
     }),

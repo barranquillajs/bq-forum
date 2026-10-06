@@ -4,6 +4,7 @@ export const API_RESPONSES = {
     POST_CREATED: "Post created successfully",
     USER_AUTHENTICATED: "User authenticated successfully",
     COOKIES_DELETED: "Cookies deleted successfully",
+    POST_UNPUBLISHED_CORRECTLY: "Post unpublished correctly",
   },
   ERROR: {
     USER_NOT_AUTHENTICATED: "User not authenticated",
@@ -16,8 +17,14 @@ export const API_RESPONSES = {
     ERROR_IN_AUTHENTICATION_FLOW: "Error in authentication flow",
     ERROR_ADDING_LABEL: "Error adding label",
     UNEXPECTED_ERROR_CREATING_POST: "Unexpected error creating post",
+    UNEXPECTED_ERROR_UPDATING_POST: "Unexpected error updating post",
     MISSING_OAUTH_PARAMETERS: "Missing OAuth parameters",
     ERROR_DELETING_COOKIES: "Error deleting cookies",
+    POST_NOT_FOUND: "Post not found",
+    POST_NOT_MATCH_WITH_USER: "The post doesn't match with the user",
+    POST_NOT_OWNERSHIP: "The user doesn't has this post ownership",
+    POST_ALREADY_UNPUBLISHED: "The post is already unpublished",
+    POST_CANT_UPDATE: "The post can't be updated",
     DATA_ERROR: "Data error",
   },
 } as const;

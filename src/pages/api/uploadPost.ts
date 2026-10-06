@@ -1,11 +1,10 @@
 import { HTTP_STATUS, API_RESPONSES } from "@constants/responses";
+import { REPOSITORY, BASE_BRANCH } from "@constants/general";
 import { OAUTH_TOKEN, USER_DATA } from "@constants/storage";
 import { API_URLS } from "@constants/urls";
 import type { User } from "@lib/types";
 import type { APIRoute } from "astro";
 
-const REPOSITORY = "barranquillajs/bq-forum";
-const BASE_BRANCH = "main";
 const POST_LABEL = "post";
 
 export const POST = (async ({ request, cookies }) => {
@@ -27,7 +26,7 @@ export const POST = (async ({ request, cookies }) => {
       );
     }
 
-    const { name, avatarUrl }: User = JSON.parse(
+    const { name, avatarUrl, id }: User = JSON.parse(
       cookies.get(USER_DATA)?.value ?? "{}",
     );
 
@@ -111,6 +110,7 @@ export const POST = (async ({ request, cookies }) => {
     const mdxContent = `---
 title: "${title.replace(/"/g, '\\"')}"
 date: "${new Date().toISOString()}"
+userId: "${id}"
 name: "${name}"
 avatarUrl: "${avatarUrl}"
 published: true
@@ -125,7 +125,7 @@ ${content}
         method: "PUT",
         headers: githubHeaders,
         body: JSON.stringify({
-          message: `feat(post): add ${title}`,
+          message: `feat: add ${title}`,
           content: Buffer.from(mdxContent, "utf-8").toString("base64"),
           branch: branchName,
         }),
