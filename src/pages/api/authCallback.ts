@@ -70,9 +70,5 @@ export const GET = (async ({ url, cookies }) => {
     COOKIES_STANDARD_OPTIONS,
   );
 
-  redirectUrl.searchParams.set("name", name);
-  redirectUrl.searchParams.set("avatarUrl", avatarUrl);
-  redirectUrl.searchParams.set("token", data.access_token);
-
   return Response.redirect(redirectUrl, HTTP_STATUS.FOUND);
 }) satisfies APIRoute;

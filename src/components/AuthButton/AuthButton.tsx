@@ -1,13 +1,9 @@
-import { useLocalStorage } from "@hooks/useLocalStorage/useLocalStorage";
-import { login, logout } from "@lib/auth";
-import { USER_DATA } from "@constants/storage";
 import { AUTH_BUTTON_ID, AUTH_BUTTON_ANCHOR } from "@constants/uiIds";
+import { login, logout } from "@lib/auth";
 import type { User } from "@lib/types";
 
-export const AuthButton = () => {
-  const userData: User | undefined | null = useLocalStorage(USER_DATA);
-
-  if (!userData)
+export const AuthButton = ({ userData }: { userData: User | undefined }) => {
+  if (!userData?.avatarUrl)
     return (
       <button className="btn btn-warning btn-sm" onClick={() => login()}>
         Iniciar sesión

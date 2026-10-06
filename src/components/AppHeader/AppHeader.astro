@@ -3,6 +3,9 @@ import Container from "@components/Container/Container.astro";
 import { SITE } from "@constants/general";
 import { AuthButton } from "@components/AuthButton/AuthButton.tsx";
 import { APP_URLS } from "@constants/urls";
+import { USER_DATA } from "@constants/storage";
+
+const userData = JSON.parse(Astro.cookies.get(USER_DATA)?.value ?? "{}")
 ---
 
 <header class="fixed top-0 left-0 right-0 z-50 py-1 bg-stone-100/75 dark:bg-stone-900/25 backdrop-blur-sm saturate-200">
@@ -16,7 +19,7 @@ import { APP_URLS } from "@constants/urls";
             </a>
             <div class="flex items-center gap-4">
                 <a class="btn btn-sm btn-info" href={APP_URLS.CREATE}>Crear +</a>
-                <AuthButton client:only />
+                <AuthButton client:only userData={userData} />
             </div>
         </div>
     </Container>
