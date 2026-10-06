@@ -9,6 +9,7 @@ export const API_URLS = {
   POST_AUTH_CALLBACK: `${PUBLIC_APP_URL}/api/authCallback`,
   POST_AUTH_COOKIES: `${PUBLIC_APP_URL}/api/authCookies`,
   POST_UPLOAD_POST: `${PUBLIC_APP_URL}/api/uploadPost`,
+  POST_UNPUBLISH_POST: `${PUBLIC_APP_URL}/api/unpublishPost`,
   GITHUB_BRANCH: `${PUBLIC_GITHUB_API_URL}/repos`,
   GITHUB_ACCESS_TOKEN: `${PUBLIC_GITHUB_URL}/login/oauth/access_token`,
   GITHUB_USER_DATA: `${PUBLIC_GITHUB_API_URL}/user`,

@@ -1,12 +1,14 @@
 ---
-import Container from "@components/Container/Container.astro";
 import { MarkdowWrapper } from "@components/MarkdowWrapper/MarkdowWrapper";
-import { HOME } from "@constants/general";
-import { APP_URLS } from "@constants/urls";
+import { PublishButton } from "@components/PublishButton/PublishButton";
+import Container from "@components/Container/Container.astro";
 import PageLayout  from "@layouts/PageLayout.astro";
+import { USER_DATA } from "@constants/storage";
 import type { ContentPost } from "@lib/types";
-import type { GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
+import type { GetStaticPaths } from "astro";
+import { APP_URLS } from "@constants/urls";
+import { HOME } from "@constants/general";
 
 const posts = await getCollection("posts") as Array<ContentPost>;
 
@@ -18,11 +20,18 @@ export const getStaticPaths = (() => {
 const { post } = Astro.params;
 const postData = posts.find((p) => p.id === post);
 if (!postData) return Astro.redirect(APP_URLS.INDEX);
+
+const isPublished = postData.data.published === true;
+const userData = JSON.parse(Astro.cookies.get(USER_DATA)?.value ?? "{}");
+const currentUserId = userData?.id;
 ---
 <PageLayout title={`${postData.data.title} | ${HOME.TITLE}`} description={HOME.DESCRIPTION}>
     <Container>
         <section class="my-14">
-            <h1>{postData.data.title}</h1>
+            <div class="flex flex-row items-center justify-between">
+                <h1 class="my-4 text-4xl font-bold">{postData.data.title}</h1>
+                <PublishButton client:load isPublished={isPublished} slug={post} postUserId={postData.data.userId} currentUserId={currentUserId} />
+            </div>
             <MarkdowWrapper client:load textBody={postData.body} />
         </section>
     </Container>

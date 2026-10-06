@@ -29,9 +29,6 @@ export const AuthButton = ({ userData }: { userData: User | undefined }) => {
         id={AUTH_BUTTON_ID}
         style={{ positionAnchor: AUTH_BUTTON_ANCHOR }}
       >
-        <li className="disabled">
-          <a>Mis posts</a>
-        </li>
         <li onClick={() => logout()}>
           <a>Cerrar sesión</a>
         </li>
