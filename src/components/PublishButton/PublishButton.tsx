@@ -1,3 +1,5 @@
+import { APP_URLS } from '@constants/urls';
+import { publishPost } from '@controllers/publishPost';
 import { unpublishPost } from '@controllers/unpublishPost';
 
 interface PublishButtonProps {
@@ -14,10 +16,19 @@ export const PublishButton = ({
   postUserId,
 }: PublishButtonProps) => {
   const isUserPost = parseInt(postUserId) === currentUserId;
-  // console.log({ isPublished, slug, currentUserId, postUserId, isUserPost });
 
-  const handleUnpublish = () => {
-    unpublishPost({ slug });
+  const handleUnpublish = async () => {
+    const result = await unpublishPost({ slug });
+    if (!result.success) return;
+
+    window.location.href = APP_URLS.INDEX;
+  };
+
+  const handlePublish = async () => {
+    const result = await publishPost({ slug });
+    if (!result.success) return;
+
+    window.location.href = APP_URLS.INDEX;
   };
 
   if (isUserPost && isPublished)
@@ -31,7 +42,12 @@ export const PublishButton = ({
     );
   if (isUserPost && !isPublished)
     return (
-      <button className="btn btn-sm btn-error btn-outline">Publicar</button>
+      <button
+        className="btn btn-sm btn-error btn-outline"
+        onClick={handlePublish}
+      >
+        Publicar
+      </button>
     );
   return <div />;
 };

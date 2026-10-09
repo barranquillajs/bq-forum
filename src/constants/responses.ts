@@ -5,6 +5,8 @@ export const API_RESPONSES = {
     USER_AUTHENTICATED: 'User authenticated successfully',
     COOKIES_DELETED: 'Cookies deleted successfully',
     POST_UNPUBLISHED_CORRECTLY: 'Post unpublished correctly',
+    POST_ALREADY_PUBLISHED: 'Post already published',
+    POST_PUBLISHED_CORRECTLY: 'Post published correctly',
   },
   ERROR: {
     USER_NOT_AUTHENTICATED: 'User not authenticated',

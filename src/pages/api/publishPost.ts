@@ -132,15 +132,15 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     }
 
     const updatedContent = currentContent.replace(
-      /^published:\s*true\s*$/m,
-      'published: false'
+      /^published:\s*false\s*$/m,
+      'published: true'
     );
 
     if (updatedContent === currentContent) {
       return new Response(
         JSON.stringify({
           success: true,
-          message: API_RESPONSES.ERROR.POST_ALREADY_UNPUBLISHED,
+          message: API_RESPONSES.SUCCESS.POST_ALREADY_PUBLISHED,
         }),
         {
           status: HTTP_STATUS.OK,
@@ -157,7 +157,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
         method: 'PUT',
         headers: githubHeaders,
         body: JSON.stringify({
-          message: `feat: unpublish ${slug}`,
+          message: `feat: publish ${slug}`,
           content: Buffer.from(updatedContent, 'utf-8').toString('base64'),
           sha: file.sha,
           branch: BASE_BRANCH,
@@ -186,7 +186,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     return new Response(
       JSON.stringify({
         success: true,
-        message: API_RESPONSES.SUCCESS.POST_UNPUBLISHED_CORRECTLY,
+        message: API_RESPONSES.SUCCESS.POST_PUBLISHED_CORRECTLY,
         data: {
           slug,
         },
