@@ -1,0 +1,29 @@
+---
+interface Props {
+	totalPages: number;
+	currentPage: number;
+}
+
+const { totalPages, currentPage } = Astro.props;
+---
+
+{totalPages > 1 && (
+  <nav class="flex justify-center gap-2 my-8">
+    {Array.from({ length: totalPages }, (_, index) => {
+      const page = index + 1;
+
+      return (
+        <a
+          href={`?page=${page}`}
+          class={`btn ${
+            page === currentPage
+              ? "btn-neutral"
+              : "btn-outline"
+          }`}
+        >
+          {page}
+        </a>
+      );
+    })}
+  </nav>
+)}
