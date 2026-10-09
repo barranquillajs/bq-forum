@@ -8,8 +8,9 @@ import type { ContentPost } from "@lib/types";
 import { APP_URLS } from "@constants/urls";
 
 const posts = await getCollection("posts") as Array<ContentPost>;
+const publishedPost = posts.filter((post) => post.data.published)
 
-const sortedPosts = posts.sort(
+const sortedPosts = publishedPost.sort(
   (a, b) =>
     new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
 );
