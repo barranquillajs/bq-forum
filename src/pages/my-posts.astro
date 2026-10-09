@@ -6,24 +6,22 @@ import PostPaginator from "@components/PostPaginator/PostPaginator.astro"
 import Container from "@components/Container/Container.astro";
 import { getPostUsableInformation } from "@lib/posts";
 import PageLayout from "@layouts/PageLayout.astro";
-import type { ContentPost } from "@lib/types";
+import type { ContentPost, User } from "@lib/types";
 import { HOME } from "@constants/general";
+import { USER_DATA } from "@constants/storage";
 
 const pageParam = Number(Astro.url.searchParams.get('page') ?? '1');
+const userData = JSON.parse(Astro.cookies.get(USER_DATA)?.value ?? "{}") as User;
+
 const posts = await getCollection("posts") as Array<ContentPost>;
-const {paginatedPosts, totalPages, currentPage} = getPostUsableInformation(posts, pageParam)
+const {paginatedPosts, totalPages, currentPage} = getPostUsableInformation(posts, pageParam, userData.id)
 ---
 
 <PageLayout title={HOME.TITLE} description={HOME.DESCRIPTION}>
   <Container>
     <main>
       <section class="my-14">
-        <h1 class="text-4xl">Hola for</h1>
-
-        <p>
-          Un lugar donde puedes crear conversaciones permanentes sobre la
-          comunidad o la ciudad
-        </p>
+        <h1 class="text-4xl">Tus posts creados</h1>
       </section>
 
       <PostListSection posts={paginatedPosts} />

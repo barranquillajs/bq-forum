@@ -21,4 +21,5 @@ export const APP_URLS = {
   INDEX: `${PUBLIC_APP_URL}/`,
   CREATE: `${PUBLIC_APP_URL}/create`,
   POST: `${PUBLIC_APP_URL}/post`,
+  MY_POSTS: `${PUBLIC_APP_URL}/my-posts`,
 };

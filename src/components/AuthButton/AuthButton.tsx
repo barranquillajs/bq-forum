@@ -1,4 +1,5 @@
 import { AUTH_BUTTON_ID, AUTH_BUTTON_ANCHOR } from '@constants/uiIds';
+import { APP_URLS } from '@constants/urls';
 import { login, logout } from '@lib/auth';
 import type { User } from '@lib/types';
 
@@ -32,6 +33,9 @@ export const AuthButton = ({ userData }: { userData: User | undefined }) => {
         id={AUTH_BUTTON_ID}
         style={{ positionAnchor: AUTH_BUTTON_ANCHOR }}
       >
+        <li>
+          <a href={APP_URLS.MY_POSTS}>Ver mis posts</a>
+        </li>
         <li onClick={() => logout()}>
           <a>Cerrar sesión</a>
         </li>
