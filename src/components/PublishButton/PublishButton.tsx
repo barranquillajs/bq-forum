@@ -6,7 +6,7 @@ interface PublishButtonProps {
   isPublished: boolean;
   slug: string;
   currentUserId: number;
-  postUserId: string;
+  postUserId: number;
 }
 
 export const PublishButton = ({
@@ -15,7 +15,7 @@ export const PublishButton = ({
   currentUserId,
   postUserId,
 }: PublishButtonProps) => {
-  const isUserPost = parseInt(postUserId) === currentUserId;
+  const isUserPost = postUserId === currentUserId;
 
   const handleUnpublish = async () => {
     const result = await unpublishPost({ slug });

@@ -113,8 +113,8 @@ export const POST: APIRoute = async ({ request, cookies }) => {
       );
     }
 
-    const postUserId = parseInt(userIdMatch[1] || '0');
-    const logedUserId = parseInt(user.id);
+    const postUserId = userIdMatch[1] || 0;
+    const logedUserId = user.id;
 
     if (postUserId !== logedUserId) {
       return new Response(

@@ -115,7 +115,7 @@ export const POST = (async ({ request, cookies }) => {
     const mdxContent = `---
 title: "${title.replace(/"/g, '\\"')}"
 date: "${new Date().toISOString()}"
-userId: "${currentUserData.id}"
+userId: ${currentUserData.id}
 userName: "${currentUserData.userName}"
 userAvatarUrl: "${currentUserData.userAvatarUrl}"
 published: true

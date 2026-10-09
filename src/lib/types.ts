@@ -10,7 +10,7 @@ export type ContentPost = {
     title: string;
     date: string;
     userName: string;
-    userId: string;
+    userId: number;
     userAvatarUrl: string;
     published: boolean;
   };

@@ -8,7 +8,7 @@ export const getPostUsableInformation = (
 ) => {
   const publishedPost = posts.filter(post => {
     if (userId) {
-      const postUserId = parseInt(post.data.userId);
+      const postUserId = post.data.userId;
       return postUserId === userId;
     }
     return post.data.published;
