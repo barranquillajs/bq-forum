@@ -1,6 +1,7 @@
 import { HTTP_STATUS, API_RESPONSES } from "@constants/responses";
 import { REPOSITORY, BASE_BRANCH } from "@constants/general";
-import { OAUTH_TOKEN, USER_DATA } from "@constants/storage";
+import { GITHUB_REPOSITORY_SECRET } from "astro:env/server";
+import { USER_DATA } from "@constants/storage";
 import { API_URLS } from "@constants/urls";
 import type { User } from "@lib/types";
 import type { APIRoute } from "astro";
@@ -9,7 +10,7 @@ const POST_LABEL = "post";
 
 export const POST = (async ({ request, cookies }) => {
   try {
-    const githubToken = cookies.get(OAUTH_TOKEN)?.value;
+    const githubToken = GITHUB_REPOSITORY_SECRET;
 
     if (!githubToken) {
       return new Response(
@@ -29,8 +30,6 @@ export const POST = (async ({ request, cookies }) => {
     const currentUserData: User = JSON.parse(
       cookies.get(USER_DATA)?.value ?? "{}",
     );
-
-    console.log(currentUserData);
 
     if (
       !currentUserData?.name ||

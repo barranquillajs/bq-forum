@@ -1,13 +1,14 @@
 import { HTTP_STATUS, API_RESPONSES } from "@constants/responses";
 import { BASE_BRANCH, REPOSITORY } from "@constants/general";
-import { OAUTH_TOKEN, USER_DATA } from "@constants/storage";
+import { GITHUB_REPOSITORY_SECRET } from "astro:env/server";
+import { USER_DATA } from "@constants/storage";
 import { API_URLS } from "@constants/urls";
 import type { User } from "@lib/types";
 import type { APIRoute } from "astro";
 
-export const POST: APIRoute = async ({ params, cookies }) => {
+export const POST: APIRoute = async ({ request, cookies }) => {
   try {
-    const githubToken = cookies.get(OAUTH_TOKEN)?.value;
+    const githubToken = GITHUB_REPOSITORY_SECRET;
 
     if (!githubToken) {
       return new Response(
@@ -41,7 +42,7 @@ export const POST: APIRoute = async ({ params, cookies }) => {
       );
     }
 
-    const { slug } = params;
+    const { slug } = await request.json();
 
     if (!slug) {
       return new Response(
@@ -66,13 +67,11 @@ export const POST: APIRoute = async ({ params, cookies }) => {
     };
 
     const filePath = `src/content/posts/${slug}.mdx`;
+    const fileUrl = `${API_URLS.GITHUB_BRANCH}/${REPOSITORY}/contents/${filePath}?ref=${BASE_BRANCH}`;
 
-    const fileResponse = await fetch(
-      `${API_URLS.GITHUB_BRANCH}/${REPOSITORY}/contents/${filePath}?ref=${BASE_BRANCH}`,
-      {
-        headers: githubHeaders,
-      },
-    );
+    const fileResponse = await fetch(fileUrl, {
+      headers: githubHeaders,
+    });
 
     if (!fileResponse.ok) {
       return new Response(
@@ -114,9 +113,10 @@ export const POST: APIRoute = async ({ params, cookies }) => {
       );
     }
 
-    const postUserId = userIdMatch[1];
+    const postUserId = parseInt(userIdMatch[1] || "0");
+    const logedUserId = parseInt(user.id);
 
-    if (postUserId !== user.id) {
+    if (postUserId !== logedUserId) {
       return new Response(
         JSON.stringify({
           success: false,

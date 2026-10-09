@@ -27,6 +27,10 @@ export default defineConfig({
         context: "server",
         access: "secret",
       }),
+      GITHUB_REPOSITORY_SECRET: envField.string({
+        context: "server",
+        access: "secret",
+      }),
       PUBLIC_APP_URL: envField.string({
         context: "client",
         access: "public",
