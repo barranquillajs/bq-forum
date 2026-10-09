@@ -116,8 +116,6 @@ export const POST: APIRoute = async ({ request, cookies }) => {
     const postUserId = parseInt(userIdMatch[1] || '0');
     const logedUserId = user.id;
 
-    console.log({ postUserId, logedUserId });
-
     if (postUserId !== logedUserId) {
       return new Response(
         JSON.stringify({

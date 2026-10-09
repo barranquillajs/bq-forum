@@ -113,11 +113,11 @@ export const POST = (async ({ request, cookies }) => {
     const filePath = `src/content/posts/${slug}.mdx`;
 
     const mdxContent = `---
-title: "${title.replace(/"/g, '\\"')}"
-date: "${new Date().toISOString()}"
+title: '${title.replace(/"/g, '\\"')}'
+date: '${new Date().toISOString()}'
 userId: ${currentUserData.id}
-userName: "${currentUserData.userName}"
-userAvatarUrl: "${currentUserData.userAvatarUrl}"
+userName: '${currentUserData.userName}'
+userAvatarUrl: '${currentUserData.userAvatarUrl}'
 published: true
 ---
 
