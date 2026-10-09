@@ -1,9 +1,9 @@
 ---
-title: "Segunda publicación"
-date: "2026-10-03T17:50:56.200Z"
-userId: "0001"
-name: "Jesús Bossa"
-avatarUrl: "https://avatars.githubusercontent.com/u/24579681?v=4"
+title: 'Segunda publicación'
+date: '2026-10-03T17:50:56.200Z'
+userId: '0001'
+name: 'Jesús Bossa'
+avatarUrl: 'https://avatars.githubusercontent.com/u/24579681?v=4'
 published: true
 ---
 
@@ -35,10 +35,10 @@ Here is an example of a plugin to highlight code:
 [`rehype-starry-night`](https://github.com/rehypejs/rehype-starry-night).
 
 ```js
-import React from "react";
-import ReactDom from "react-dom";
-import { MarkdownHooks } from "react-markdown";
-import rehypeStarryNight from "rehype-starry-night";
+import React from 'react';
+import ReactDom from 'react-dom';
+import { MarkdownHooks } from 'react-markdown';
+import rehypeStarryNight from 'rehype-starry-night';
 
 const markdown = `
 # Your markdown here
@@ -46,7 +46,7 @@ const markdown = `
 
 ReactDom.render(
   <MarkdownHooks rehypePlugins={[rehypeStarryNight]}>{markdown}</MarkdownHooks>,
-  document.querySelector("#content"),
+  document.querySelector('#content')
 );
 ```
 
@@ -88,10 +88,10 @@ You should probably combine it with
 You can pass components to change things:
 
 ```js
-import React from "react";
-import ReactDom from "react-dom";
-import Markdown from "react-markdown";
-import MyFancyRule from "./components/my-fancy-rule.js";
+import React from 'react';
+import ReactDom from 'react-dom';
+import Markdown from 'react-markdown';
+import MyFancyRule from './components/my-fancy-rule.js';
 
 const markdown = `
 # Your markdown here
@@ -101,7 +101,7 @@ ReactDom.render(
   <Markdown
     components={{
       // Use h2s instead of h1s
-      h1: "h2",
+      h1: 'h2',
       // Use a component instead of hrs
       hr(props) {
         const { node, ...rest } = props;
@@ -111,7 +111,7 @@ ReactDom.render(
   >
     {markdown}
   </Markdown>,
-  document.querySelector("#content"),
+  document.querySelector('#content')
 );
 ```
 

@@ -1,5 +1,5 @@
-import { API_URLS } from "@constants/urls";
-import { globalController } from "@controllers/globalController";
+import { API_URLS } from '@constants/urls';
+import { globalController } from '@controllers/globalController';
 
 type uploadPostData = {
   title: string;
@@ -16,6 +16,6 @@ export interface uploadPostResponse {
 }
 
 export const uploadPost = async (
-  data: uploadPostData,
+  data: uploadPostData
 ): Promise<uploadPostResponse> =>
-  await globalController(API_URLS.POST_UPLOAD_POST, "POST", data);
+  await globalController(API_URLS.POST_UPLOAD_POST, 'POST', data);

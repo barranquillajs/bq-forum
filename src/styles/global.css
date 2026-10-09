@@ -1,5 +1,5 @@
 @plugin "@tailwindcss/typography";
-@import "tailwindcss";
+@import 'tailwindcss';
 @plugin "daisyui";
 
 html {

@@ -1,4 +1,4 @@
-import ReactMarkdown from "react-markdown";
+import ReactMarkdown from 'react-markdown';
 
 export const MarkdowWrapper = ({ textBody }: { textBody: string }) => {
   return (

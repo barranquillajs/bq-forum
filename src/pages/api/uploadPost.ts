@@ -1,12 +1,12 @@
-import { HTTP_STATUS, API_RESPONSES } from "@constants/responses";
-import { REPOSITORY, BASE_BRANCH } from "@constants/general";
-import { GITHUB_REPOSITORY_SECRET } from "astro:env/server";
-import { USER_DATA } from "@constants/storage";
-import { API_URLS } from "@constants/urls";
-import type { User } from "@lib/types";
-import type { APIRoute } from "astro";
+import { HTTP_STATUS, API_RESPONSES } from '@constants/responses';
+import { REPOSITORY, BASE_BRANCH } from '@constants/general';
+import { GITHUB_REPOSITORY_SECRET } from 'astro:env/server';
+import { USER_DATA } from '@constants/storage';
+import { API_URLS } from '@constants/urls';
+import type { User } from '@lib/types';
+import type { APIRoute } from 'astro';
 
-const POST_LABEL = "post";
+const POST_LABEL = 'post';
 
 export const POST = (async ({ request, cookies }) => {
   try {
@@ -21,14 +21,14 @@ export const POST = (async ({ request, cookies }) => {
         {
           status: HTTP_STATUS.UNAUTHORIZED,
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
-        },
+        }
       );
     }
 
     const currentUserData: User = JSON.parse(
-      cookies.get(USER_DATA)?.value ?? "{}",
+      cookies.get(USER_DATA)?.value ?? '{}'
     );
 
     if (
@@ -44,9 +44,9 @@ export const POST = (async ({ request, cookies }) => {
         {
           status: HTTP_STATUS.UNAUTHORIZED,
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
-        },
+        }
       );
     }
 
@@ -61,38 +61,38 @@ export const POST = (async ({ request, cookies }) => {
         {
           status: HTTP_STATUS.BAD_REQUEST,
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
-        },
+        }
       );
     }
 
     const slug = title
       .toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-|-$/g, "");
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-|-$/g, '');
 
     const branchName = `post/${slug}-${Date.now()}`;
 
     const githubHeaders = {
-      Accept: "application/vnd.github+json",
+      Accept: 'application/vnd.github+json',
       Authorization: `Bearer ${githubToken}`,
-      "X-GitHub-Api-Version": "2022-11-28",
-      "Content-Type": "application/json",
+      'X-GitHub-Api-Version': '2022-11-28',
+      'Content-Type': 'application/json',
     };
 
     const branchResponse = await fetch(
       `${API_URLS.GITHUB_BRANCH}/${REPOSITORY}/git/refs`,
       {
-        method: "POST",
+        method: 'POST',
         headers: githubHeaders,
         body: JSON.stringify({
           ref: `refs/heads/${branchName}`,
           sha: await getMainSha(githubHeaders),
         }),
-      },
+      }
     );
 
     if (!branchResponse.ok) {
@@ -106,7 +106,7 @@ export const POST = (async ({ request, cookies }) => {
         }),
         {
           status: HTTP_STATUS.BAD_REQUEST,
-        },
+        }
       );
     }
 
@@ -127,14 +127,14 @@ ${content}
     const fileResponse = await fetch(
       `${API_URLS.GITHUB_BRANCH}/${REPOSITORY}/contents/${filePath}`,
       {
-        method: "PUT",
+        method: 'PUT',
         headers: githubHeaders,
         body: JSON.stringify({
           message: `feat: add ${title}`,
-          content: Buffer.from(mdxContent, "utf-8").toString("base64"),
+          content: Buffer.from(mdxContent, 'utf-8').toString('base64'),
           branch: branchName,
         }),
-      },
+      }
     );
 
     if (!fileResponse.ok) {
@@ -148,14 +148,14 @@ ${content}
         }),
         {
           status: HTTP_STATUS.BAD_REQUEST,
-        },
+        }
       );
     }
 
     const pullRequestResponse = await fetch(
       `${API_URLS.GITHUB_BRANCH}/${REPOSITORY}/pulls`,
       {
-        method: "POST",
+        method: 'POST',
         headers: githubHeaders,
         body: JSON.stringify({
           title: `post: ${title}`,
@@ -164,7 +164,7 @@ ${content}
           base: BASE_BRANCH,
           labels: [POST_LABEL],
         }),
-      },
+      }
     );
 
     if (!pullRequestResponse.ok) {
@@ -178,7 +178,7 @@ ${content}
         }),
         {
           status: HTTP_STATUS.BAD_REQUEST,
-        },
+        }
       );
     }
 
@@ -187,12 +187,12 @@ ${content}
     const labelResponse = await fetch(
       `${API_URLS.GITHUB_BRANCH}/${REPOSITORY}/issues/${pullRequest.number}/labels`,
       {
-        method: "POST",
+        method: 'POST',
         headers: githubHeaders,
         body: JSON.stringify({
           labels: [POST_LABEL],
         }),
-      },
+      }
     );
 
     if (!labelResponse.ok) {
@@ -206,19 +206,19 @@ ${content}
         }),
         {
           status: HTTP_STATUS.BAD_REQUEST,
-        },
+        }
       );
     }
 
     const mergeResponse = await fetch(
       `${API_URLS.GITHUB_BRANCH}/${REPOSITORY}/pulls/${pullRequest.number}/merge`,
       {
-        method: "PUT",
+        method: 'PUT',
         headers: githubHeaders,
         body: JSON.stringify({
-          merge_method: "squash",
+          merge_method: 'squash',
         }),
-      },
+      }
     );
 
     const mergeResult = await mergeResponse.json();
@@ -233,7 +233,7 @@ ${content}
         }),
         {
           status: HTTP_STATUS.BAD_REQUEST,
-        },
+        }
       );
     }
 
@@ -249,9 +249,9 @@ ${content}
       {
         status: HTTP_STATUS.OK,
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
-      },
+      }
     );
   } catch (error) {
     console.error(error);
@@ -264,9 +264,9 @@ ${content}
       {
         status: HTTP_STATUS.INTERNAL_SERVER_ERROR,
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
-      },
+      }
     );
   }
 }) satisfies APIRoute;
@@ -276,10 +276,10 @@ async function getMainSha(headers: Record<string, string>) {
     `${API_URLS.GITHUB_BRANCH}/${REPOSITORY}/git/ref/heads/${BASE_BRANCH}`,
     {
       headers,
-    },
+    }
   );
 
-  if (!response.ok) throw new Error("Could not get main branch SHA");
+  if (!response.ok) throw new Error('Could not get main branch SHA');
   const data = await response.json();
   return data.object.sha;
 }

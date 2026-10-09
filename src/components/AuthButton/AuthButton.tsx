@@ -1,6 +1,6 @@
-import { AUTH_BUTTON_ID, AUTH_BUTTON_ANCHOR } from "@constants/uiIds";
-import { login, logout } from "@lib/auth";
-import type { User } from "@lib/types";
+import { AUTH_BUTTON_ID, AUTH_BUTTON_ANCHOR } from '@constants/uiIds';
+import { login, logout } from '@lib/auth';
+import type { User } from '@lib/types';
 
 export const AuthButton = ({ userData }: { userData: User | undefined }) => {
   if (!userData?.avatarUrl)

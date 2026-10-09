@@ -1,10 +1,10 @@
-import { HTTP_STATUS, API_RESPONSES } from "@constants/responses";
-import { BASE_BRANCH, REPOSITORY } from "@constants/general";
-import { GITHUB_REPOSITORY_SECRET } from "astro:env/server";
-import { USER_DATA } from "@constants/storage";
-import { API_URLS } from "@constants/urls";
-import type { User } from "@lib/types";
-import type { APIRoute } from "astro";
+import { HTTP_STATUS, API_RESPONSES } from '@constants/responses';
+import { BASE_BRANCH, REPOSITORY } from '@constants/general';
+import { GITHUB_REPOSITORY_SECRET } from 'astro:env/server';
+import { USER_DATA } from '@constants/storage';
+import { API_URLS } from '@constants/urls';
+import type { User } from '@lib/types';
+import type { APIRoute } from 'astro';
 
 export const POST: APIRoute = async ({ request, cookies }) => {
   try {
@@ -19,13 +19,13 @@ export const POST: APIRoute = async ({ request, cookies }) => {
         {
           status: HTTP_STATUS.UNAUTHORIZED,
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
-        },
+        }
       );
     }
 
-    const user: User = JSON.parse(cookies.get(USER_DATA)?.value ?? "{}");
+    const user: User = JSON.parse(cookies.get(USER_DATA)?.value ?? '{}');
 
     if (!user.id) {
       return new Response(
@@ -36,9 +36,9 @@ export const POST: APIRoute = async ({ request, cookies }) => {
         {
           status: HTTP_STATUS.UNAUTHORIZED,
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
-        },
+        }
       );
     }
 
@@ -53,17 +53,17 @@ export const POST: APIRoute = async ({ request, cookies }) => {
         {
           status: HTTP_STATUS.BAD_REQUEST,
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
-        },
+        }
       );
     }
 
     const githubHeaders = {
-      Accept: "application/vnd.github+json",
+      Accept: 'application/vnd.github+json',
       Authorization: `Bearer ${githubToken}`,
-      "X-GitHub-Api-Version": "2022-11-28",
-      "Content-Type": "application/json",
+      'X-GitHub-Api-Version': '2022-11-28',
+      'Content-Type': 'application/json',
     };
 
     const filePath = `src/content/posts/${slug}.mdx`;
@@ -82,20 +82,20 @@ export const POST: APIRoute = async ({ request, cookies }) => {
         {
           status: HTTP_STATUS.NOT_FOUND,
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
-        },
+        }
       );
     }
 
     const file = await fileResponse.json();
 
-    const currentContent = Buffer.from(file.content, "base64").toString(
-      "utf-8",
+    const currentContent = Buffer.from(file.content, 'base64').toString(
+      'utf-8'
     );
 
     const userIdMatch = currentContent.match(
-      /^userId:\s*["']?([^"'\n]+)["']?\s*$/m,
+      /^userId:\s*["']?([^"'\n]+)["']?\s*$/m
     );
 
     if (!userIdMatch) {
@@ -107,13 +107,13 @@ export const POST: APIRoute = async ({ request, cookies }) => {
         {
           status: HTTP_STATUS.BAD_REQUEST,
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
-        },
+        }
       );
     }
 
-    const postUserId = parseInt(userIdMatch[1] || "0");
+    const postUserId = parseInt(userIdMatch[1] || '0');
     const logedUserId = parseInt(user.id);
 
     if (postUserId !== logedUserId) {
@@ -125,15 +125,15 @@ export const POST: APIRoute = async ({ request, cookies }) => {
         {
           status: HTTP_STATUS.FORBIDDEN,
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
-        },
+        }
       );
     }
 
     const updatedContent = currentContent.replace(
       /^published:\s*true\s*$/m,
-      "published: false",
+      'published: false'
     );
 
     if (updatedContent === currentContent) {
@@ -145,24 +145,24 @@ export const POST: APIRoute = async ({ request, cookies }) => {
         {
           status: HTTP_STATUS.OK,
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
-        },
+        }
       );
     }
 
     const updateResponse = await fetch(
       `${API_URLS.GITHUB_BRANCH}/${REPOSITORY}/contents/${filePath}`,
       {
-        method: "PUT",
+        method: 'PUT',
         headers: githubHeaders,
         body: JSON.stringify({
           message: `feat: unpublish ${slug}`,
-          content: Buffer.from(updatedContent, "utf-8").toString("base64"),
+          content: Buffer.from(updatedContent, 'utf-8').toString('base64'),
           sha: file.sha,
           branch: BASE_BRANCH,
         }),
-      },
+      }
     );
 
     if (!updateResponse.ok) {
@@ -177,9 +177,9 @@ export const POST: APIRoute = async ({ request, cookies }) => {
         {
           status: HTTP_STATUS.BAD_REQUEST,
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
-        },
+        }
       );
     }
 
@@ -194,9 +194,9 @@ export const POST: APIRoute = async ({ request, cookies }) => {
       {
         status: HTTP_STATUS.OK,
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
-      },
+      }
     );
   } catch (error) {
     console.error(error);
@@ -209,9 +209,9 @@ export const POST: APIRoute = async ({ request, cookies }) => {
       {
         status: HTTP_STATUS.INTERNAL_SERVER_ERROR,
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
-      },
+      }
     );
   }
 };

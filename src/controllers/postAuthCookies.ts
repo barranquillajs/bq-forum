@@ -1,5 +1,5 @@
-import { API_URLS } from "@constants/urls";
-import { globalController } from "@controllers/globalController";
+import { API_URLS } from '@constants/urls';
+import { globalController } from '@controllers/globalController';
 
 type postAuthCookiesData = {
   oauthState: string;
@@ -12,6 +12,6 @@ export interface postAuthCookiesResponse {
 }
 
 export const postAuthCookies = async (
-  data: postAuthCookiesData,
+  data: postAuthCookiesData
 ): Promise<postAuthCookiesResponse> =>
-  await globalController(API_URLS.POST_AUTH_COOKIES, "POST", data);
+  await globalController(API_URLS.POST_AUTH_COOKIES, 'POST', data);

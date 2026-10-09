@@ -2,7 +2,7 @@ export const globalController = async (
   url: string,
   method: string,
   body?: Record<string, any>,
-  options?: { cached?: boolean },
+  options?: { cached?: boolean }
 ) => {
   const key = url;
 
@@ -12,7 +12,7 @@ export const globalController = async (
   }
 
   const headers: Record<string, string> = {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
   };
 
   const response = await fetch(url, {
@@ -21,7 +21,7 @@ export const globalController = async (
     headers,
   });
 
-  if (!response.ok) throw new Error("Failed to fetch");
+  if (!response.ok) throw new Error('Failed to fetch');
 
   const data = await response.json();
   if (options?.cached) sessionStorage.setItem(key, JSON.stringify(data));

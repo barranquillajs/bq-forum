@@ -1,7 +1,7 @@
-import type { APIRoute } from "astro";
-import { OAUTH_STATE, OAUTH_VERIFIER } from "@constants/storage";
-import { API_RESPONSES, HTTP_STATUS } from "@constants/responses";
-import { COOKIES_STANDARD_OPTIONS } from "@constants/general";
+import type { APIRoute } from 'astro';
+import { OAUTH_STATE, OAUTH_VERIFIER } from '@constants/storage';
+import { API_RESPONSES, HTTP_STATUS } from '@constants/responses';
+import { COOKIES_STANDARD_OPTIONS } from '@constants/general';
 
 export const POST = (async ({ cookies, request }) => {
   const { oauthVerifier, oauthState } = await request.json();
@@ -16,7 +16,7 @@ export const POST = (async ({ cookies, request }) => {
         success: false,
         message: API_RESPONSES.ERROR.ERROR_SETTING_COOKIES,
       }),
-      { status: HTTP_STATUS.INTERNAL_SERVER_ERROR },
+      { status: HTTP_STATUS.INTERNAL_SERVER_ERROR }
     );
   }
 
@@ -25,6 +25,6 @@ export const POST = (async ({ cookies, request }) => {
       success: true,
       message: API_RESPONSES.SUCCESS.COOKIES_CREATED,
     }),
-    { status: HTTP_STATUS.OK },
+    { status: HTTP_STATUS.OK }
   );
 }) satisfies APIRoute;

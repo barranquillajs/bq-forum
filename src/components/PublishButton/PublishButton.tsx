@@ -1,4 +1,4 @@
-import { unpublishPost } from "@controllers/unpublishPost";
+import { unpublishPost } from '@controllers/unpublishPost';
 
 interface PublishButtonProps {
   isPublished: boolean;

@@ -1,19 +1,19 @@
-import { PUBLIC_APP_URL, PUBLIC_GITHUB_CLIENT_ID } from "astro:env/client";
-import { removeLocalStorage, setLocalStorage } from "@lib/localStorage";
-import { postAuthCookies } from "@controllers/postAuthCookies";
-import { OAUTH_TOKEN, USER_DATA } from "@constants/storage";
-import { deleteCookies } from "@controllers/deleteCookies";
-import { API_RESPONSES } from "@constants/responses";
-import { API_URLS } from "@constants/urls";
+import { PUBLIC_APP_URL, PUBLIC_GITHUB_CLIENT_ID } from 'astro:env/client';
+import { removeLocalStorage, setLocalStorage } from '@lib/localStorage';
+import { postAuthCookies } from '@controllers/postAuthCookies';
+import { OAUTH_TOKEN, USER_DATA } from '@constants/storage';
+import { deleteCookies } from '@controllers/deleteCookies';
+import { API_RESPONSES } from '@constants/responses';
+import { API_URLS } from '@constants/urls';
 
 export const initializeRandom = () => {
   const random = (length = 32) => {
     const bytes = new Uint8Array(length);
     crypto.getRandomValues(bytes);
     return btoa(String.fromCharCode(...bytes))
-      .replace(/\+/g, "-")
-      .replace(/\//g, "_")
-      .replace(/=/g, "");
+      .replace(/\+/g, '-')
+      .replace(/\//g, '_')
+      .replace(/=/g, '');
   };
 
   const state = random();
@@ -24,17 +24,17 @@ export const initializeRandom = () => {
 
 export const generateChallenge = async (verifier: string) => {
   const data = new TextEncoder().encode(verifier);
-  const hash = await crypto.subtle.digest("SHA-256", data);
+  const hash = await crypto.subtle.digest('SHA-256', data);
 
   return btoa(String.fromCharCode(...new Uint8Array(hash)))
-    .replace(/\+/g, "-")
-    .replace(/\//g, "_")
-    .replace(/=/g, "");
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_')
+    .replace(/=/g, '');
 };
 
 export const initializeAuth = async (
   oauthVerifier: string,
-  oauthState: string,
+  oauthState: string
 ) => {
   const challenge = await generateChallenge(oauthVerifier);
   const redirectUri = `${PUBLIC_APP_URL}/api/authCallback`;
@@ -44,8 +44,8 @@ export const initializeAuth = async (
     redirect_uri: redirectUri,
     state: oauthState,
     code_challenge: challenge,
-    code_challenge_method: "S256",
-    scope: "repo",
+    code_challenge_method: 'S256',
+    scope: 'repo',
   });
 
   const result = await postAuthCookies({
@@ -62,9 +62,9 @@ export const initializeAuth = async (
 export const saveUserInfoIfAvaliable = async () => {
   const params = new URLSearchParams(window.location.search);
 
-  const name = params.get("name");
-  const avatarUrl = params.get("avatarUrl");
-  const token = params.get("token");
+  const name = params.get('name');
+  const avatarUrl = params.get('avatarUrl');
+  const token = params.get('token');
 
   if (!name || !avatarUrl || !token) return null;
 
@@ -76,7 +76,7 @@ export const saveUserInfoIfAvaliable = async () => {
   setLocalStorage(USER_DATA, user);
   setLocalStorage(OAUTH_TOKEN, token);
 
-  window.history.replaceState({}, "", window.location.pathname);
+  window.history.replaceState({}, '', window.location.pathname);
 };
 
 export const login = () => {

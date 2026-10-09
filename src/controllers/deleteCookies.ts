@@ -1,5 +1,5 @@
-import { API_URLS } from "@constants/urls";
-import { globalController } from "@controllers/globalController";
+import { API_URLS } from '@constants/urls';
+import { globalController } from '@controllers/globalController';
 
 export interface deleteCookiesResponse {
   success: boolean;
@@ -7,4 +7,4 @@ export interface deleteCookiesResponse {
 }
 
 export const deleteCookies = async (): Promise<deleteCookiesResponse> =>
-  await globalController(API_URLS.DELETE_COOKIES, "DELETE");
+  await globalController(API_URLS.DELETE_COOKIES, 'DELETE');

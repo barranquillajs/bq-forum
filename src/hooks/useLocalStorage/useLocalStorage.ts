@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 export const useLocalStorage = <T>(key: string) => {
   const [value, setValue] = useState<T | null>(() => {
@@ -12,11 +12,11 @@ export const useLocalStorage = <T>(key: string) => {
       setValue(item ? JSON.parse(item) : null);
     };
 
-    window.addEventListener("storage", update);
+    window.addEventListener('storage', update);
     window.addEventListener(`local-storage:${key}`, update);
 
     return () => {
-      window.removeEventListener("storage", update);
+      window.removeEventListener('storage', update);
       window.removeEventListener(`local-storage:${key}`, update);
     };
   }, [key]);

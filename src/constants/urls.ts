@@ -2,7 +2,7 @@ import {
   PUBLIC_APP_URL,
   PUBLIC_GITHUB_API_URL,
   PUBLIC_GITHUB_URL,
-} from "astro:env/client";
+} from 'astro:env/client';
 
 export const API_URLS = {
   DELETE_COOKIES: `${PUBLIC_APP_URL}/api/deleteCookies`,
