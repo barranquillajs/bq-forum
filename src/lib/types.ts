@@ -1,7 +1,7 @@
 export type User = {
   id: string;
-  name: string;
-  avatarUrl: string;
+  userName: string;
+  userAvatarUrl: string;
 };
 
 export type ContentPost = {
@@ -9,9 +9,9 @@ export type ContentPost = {
   data: {
     title: string;
     date: string;
-    name: string;
+    userName: string;
     userId: string;
-    avatarUrl: string;
+    userAvatarUrl: string;
     published: boolean;
   };
   body: string;

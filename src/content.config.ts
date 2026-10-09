@@ -11,8 +11,8 @@ const posts = defineCollection({
     title: z.string(),
     date: z.string(),
     userId: z.string(),
-    name: z.string(),
-    avatarUrl: z.string(),
+    userName: z.string(),
+    userAvatarUrl: z.string(),
     published: z.boolean(),
   }),
 });

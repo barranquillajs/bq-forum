@@ -58,16 +58,16 @@ export const GET = (async ({ url, cookies }) => {
 
   const user = await userResponse.json();
   const id = user.id;
-  const name = user.name;
-  const avatarUrl = user.avatar_url;
+  const userName = user.name;
+  const userAvatarUrl = user.avatar_url;
   const redirectUrl = new URL(PUBLIC_APP_URL);
 
   cookies.set(
     USER_DATA,
     JSON.stringify({
       id,
-      name,
-      avatarUrl,
+      userName,
+      userAvatarUrl,
     }),
     COOKIES_STANDARD_OPTIONS
   );

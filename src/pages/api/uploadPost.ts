@@ -32,8 +32,8 @@ export const POST = (async ({ request, cookies }) => {
     );
 
     if (
-      !currentUserData?.name ||
-      !currentUserData?.avatarUrl ||
+      !currentUserData?.userName ||
+      !currentUserData?.userAvatarUrl ||
       !currentUserData?.id
     ) {
       return new Response(
@@ -116,8 +116,8 @@ export const POST = (async ({ request, cookies }) => {
 title: "${title.replace(/"/g, '\\"')}"
 date: "${new Date().toISOString()}"
 userId: "${currentUserData.id}"
-name: "${currentUserData.name}"
-avatarUrl: "${currentUserData.avatarUrl}"
+userName: "${currentUserData.userName}"
+userAvatarUrl: "${currentUserData.userAvatarUrl}"
 published: true
 ---
 

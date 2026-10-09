@@ -3,7 +3,7 @@ import { login, logout } from '@lib/auth';
 import type { User } from '@lib/types';
 
 export const AuthButton = ({ userData }: { userData: User | undefined }) => {
-  if (!userData?.avatarUrl)
+  if (!userData?.userAvatarUrl)
     return (
       <button className="btn btn-warning btn-sm" onClick={() => login()}>
         Iniciar sesión
@@ -19,7 +19,10 @@ export const AuthButton = ({ userData }: { userData: User | undefined }) => {
       >
         <div className="avatar">
           <div className="w-10 rounded-full">
-            <img alt={`Usuario: ${userData.name}`} src={userData.avatarUrl} />
+            <img
+              alt={`Usuario: ${userData.userName}`}
+              src={userData.userAvatarUrl}
+            />
           </div>
         </div>
       </button>

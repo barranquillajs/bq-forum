@@ -53,13 +53,13 @@ const paginatedPosts = sortedPosts.slice(startIndex, endIndex);
               <div class="avatar">
                 <div class="w-8 rounded-full">
                   <img
-                    alt={`Usuario: ${post.data.name}`}
-                    src={post.data.avatarUrl}
+                    alt={`Usuario: ${post.data.userName}`}
+                    src={post.data.userAvatarUrl}
                   />
                 </div>
               </div>
 
-              <span>{post.data.name}</span>
+              <span>{post.data.userName}</span>
             </div>
           </a>
         ))}

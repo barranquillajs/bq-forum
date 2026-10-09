@@ -1,5 +1,5 @@
 import { PUBLIC_APP_URL, PUBLIC_GITHUB_CLIENT_ID } from 'astro:env/client';
-import { removeLocalStorage, setLocalStorage } from '@lib/localStorage';
+import { removeLocalStorage } from '@lib/localStorage';
 import { postAuthCookies } from '@controllers/postAuthCookies';
 import { OAUTH_TOKEN, USER_DATA } from '@constants/storage';
 import { deleteCookies } from '@controllers/deleteCookies';
@@ -57,26 +57,6 @@ export const initializeAuth = async (
     return alert(API_RESPONSES.ERROR.ERROR_IN_AUTHENTICATION_FLOW);
 
   window.location.href = `${API_URLS.GITHUB_OAUTH}?${params}`;
-};
-
-export const saveUserInfoIfAvaliable = async () => {
-  const params = new URLSearchParams(window.location.search);
-
-  const name = params.get('name');
-  const avatarUrl = params.get('avatarUrl');
-  const token = params.get('token');
-
-  if (!name || !avatarUrl || !token) return null;
-
-  const user = {
-    name,
-    avatarUrl,
-  };
-
-  setLocalStorage(USER_DATA, user);
-  setLocalStorage(OAUTH_TOKEN, token);
-
-  window.history.replaceState({}, '', window.location.pathname);
 };
 
 export const login = () => {
