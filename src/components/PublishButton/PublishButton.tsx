@@ -14,7 +14,7 @@ export const PublishButton = ({
   postUserId,
 }: PublishButtonProps) => {
   const isUserPost = parseInt(postUserId) === currentUserId;
-  console.log({ isPublished, slug, currentUserId, postUserId, isUserPost });
+  // console.log({ isPublished, slug, currentUserId, postUserId, isUserPost });
 
   const handleUnpublish = () => {
     unpublishPost({ slug });

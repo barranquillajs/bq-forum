@@ -19,7 +19,7 @@ const userData = JSON.parse(Astro.cookies.get(USER_DATA)?.value ?? "{}")
             </a>
             <div class="flex items-center gap-4">
                 <a class="btn btn-sm btn-info" href={APP_URLS.CREATE}>Crear +</a>
-                <AuthButton client:only userData={userData} />
+                <AuthButton client:only="react" userData={userData} />
             </div>
         </div>
     </Container>

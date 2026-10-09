@@ -3,7 +3,7 @@ import Container from "@components/Container/Container.astro";
 import PageLayout from "@layouts/PageLayout.astro";
 import { HOME } from "@constants/general";
 import { PostEditor } from "@components/PostEditor/PostEditor";
-import { OAUTH_TOKEN, USER_DATA, OAUTH_STATE } from "@constants/storage";
+import { OAUTH_TOKEN } from "@constants/storage";
 
 const loginButtonId = "login-button";
 const isUserLoggedIn = Astro.cookies.get(OAUTH_TOKEN)?.value !== undefined;
